@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:extremecore/core.dart';
 
 /*
@@ -35,11 +34,11 @@ class Server {
       endpoint: "create/$endpoint",
     );
 
-    var response = await http.post(url, body: body);
+    var response = await dio.post(url, data: body);
 
     var obj;
     try {
-      obj = json.decode(response.body);
+      obj = json.decode(response.data);
       print("Response:");
       print(obj);
       return Future.value(PostResponse.fromJson(obj));
@@ -47,7 +46,7 @@ class Server {
       print("Can't convert json to object");
       print("Response Body:");
       print(response.statusCode);
-      print(response.body);
+      print(response.data);
       return Future.value(PostResponse.fromJson({
         "is_success": "false",
         "message": "Server ERROR, check PHP Script Response for $url",
@@ -63,11 +62,11 @@ class Server {
       endpoint: "update/$endpoint",
     );
 
-    var response = await http.post(url, body: body);
+    var response = await dio.post(url, data: body);
 
     var obj;
     try {
-      obj = json.decode(response.body);
+      obj = json.decode(response.data);
       print("Response:");
       print(obj);
       return Future.value(PostResponse.fromJson(obj));
@@ -75,7 +74,7 @@ class Server {
       print("Can't convert json to object");
       print("Response Body:");
       print(response.statusCode);
-      print(response.body);
+      print(response.data);
       return Future.value(PostResponse.fromJson({
         "is_success": "false",
         "message": "Server ERROR, check PHP Script Response for $url",
@@ -91,11 +90,11 @@ class Server {
       endpoint: "get/$endpoint/$id",
     );
 
-    var response = await http.get(url);
+    var response = await dio.get(url);
 
     var obj;
     try {
-      obj = json.decode(response.body);
+      obj = json.decode(response.data);
 
       print("-----");
       print("Loaded Data:");
@@ -107,7 +106,7 @@ class Server {
       print("Can't convert json to object");
       print("Response Body:");
       print(response.statusCode);
-      print(response.body);
+      print(response.data);
     }
 
     var postResponse = PostResponse.fromJson({
@@ -133,11 +132,11 @@ class Server {
       params: params,
     );
 
-    var response = await http.get(url);
+    var response = await dio.get(url);
 
     var obj;
     try {
-      obj = json.decode(response.body);
+      obj = json.decode(response.data);
       print("-----");
       print("Loaded Data:");
       print(obj);
@@ -148,7 +147,7 @@ class Server {
       print("Can't convert json to object");
       print("Response Body:");
       print(response.statusCode);
-      print(response.body);
+      print(response.data);
     }
 
     return Future.value(obj);

@@ -1,6 +1,3 @@
-
-
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:extremecore/core.dart';
 
@@ -47,15 +44,15 @@ class _CheckListState extends State<CheckList> {
     );
     print("Loading Data from $url");
 
-    var response = await http.get(url);
+    var response = await dio.get(url);
 
     var obj;
     try {
-      obj = json.decode(response.body);
+      obj = json.decode(response.data);
     } catch (ex) {
       print("Can't be decoded to Object");
       print("Response Body:");
-      print(response.body);
+      print(response.data);
       return;
     }
 

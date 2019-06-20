@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:extremecore/core.dart';
 
 class Api {
@@ -30,27 +29,27 @@ class Api {
 
   Future customUrl(url) async {
     //!Get Table API
-    await http.get(url);
+    await dio.get(url);
   }
 
   Future getTable() async {
     //!Get Table API
     var url = Session.getApiUrl(endpoint: "table/${this.endpoint}");
-    var response = await http.get(url);
+    var response = await dio.get(url);
     return Future.value(parseResponse(response));
   }
 
   Future getAll() async {
     //!Get All Data Api
     var url = Session.getApiUrl(endpoint: "get-all/${this.endpoint}");
-    var response = await http.get(url);
+    var response = await dio.get(url);
     return Future.value(parseResponse(response));
   }
 
   Future get(id) async {
     //!Get Single Data Api
     var url = Session.getApiUrl(endpoint: "get/${this.endpoint}/$id");
-    var response = await http.get(url);
+    var response = await dio.get(url);
     return Future.value(parseResponse(response));
   }
 
@@ -59,7 +58,7 @@ class Api {
     var url = "${Session.host}public/api/create/${this.endpoint}";
 
     try {
-      var response = await http.post(url, body: formatFields(fields));
+      var response = await dio.post(url, data: formatFields(fields));
       var createResponse = PostResponse.fromJson(parseResponse(response));
       return Future.value(createResponse);
     } catch ($e) {
@@ -74,7 +73,7 @@ class Api {
     var url = "${Session.host}public/api/update/${this.endpoint}";
 
     try {
-      var response = await http.post(url, body: formatFields(fields));
+      var response = await dio.post(url, data: formatFields(fields));
       var updateResponse = PostResponse.fromJson(parseResponse(response));
       return Future.value(updateResponse);
     }
@@ -88,7 +87,7 @@ class Api {
   Future<PostResponse> delete(id) async {
     //!Delete Data Ap
     var url = Session.getApiUrl(endpoint: "delete/${this.endpoint}/$id");
-    var response = await http.post(url);
+    var response = await dio.post(url);
 
     var postResponse = PostResponse.fromJson(parseResponse(response));
     return Future.value(postResponse);
@@ -103,6 +102,6 @@ class CustomApi {
     //!Create Data API
     var url =
         Session.getApiUrl(endpoint: "custom/${this.endpoint}/${this.method}");
-    await http.post(url, body: fields);
+    await dio.post(url, data: fields);
   }
 }

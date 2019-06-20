@@ -24,12 +24,21 @@ export 'package:dio/dio.dart';
 
 export 'dart:math';
 
+import 'package:cookie_jar/cookie_jar.dart';
+
 import './_plugin/extreme/api/server_api.dart';
 import '_plugin/extreme/api/api.dart';
-
 
 import 'package:dio/dio.dart';
 
 var srv = ServerApi();
 var api = Api();
 var dio = Dio();
+
+class ExtremeCore {
+  init() {
+    dio.interceptors.add(CookieManager(CookieJar()));
+  }
+}
+
+var extremeCore = ExtremeCore();

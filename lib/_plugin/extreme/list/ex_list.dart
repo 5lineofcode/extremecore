@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:extremecore/core.dart';
 
@@ -70,14 +69,14 @@ class _ExListState extends State<ExList> {
     var url = Session.getApiUrl(
       endpoint: "delete/${apiDefinition.endpoint}/$id",
     );
-    await http.post(url);
+    await dio.post(url);
   }
 
   void loadNextPage(url) async {
     print("Loading Data from $url");
 
-    var response = await http.get(url);
-    var obj = json.decode(response.body);
+    var response = await dio.get(url);
+    var obj = json.decode(response.data);
 
     print(obj);
     setState(() {

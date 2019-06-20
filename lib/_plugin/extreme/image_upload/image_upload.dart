@@ -1,4 +1,3 @@
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:extremecore/core.dart';
 
@@ -38,14 +37,14 @@ class ExImageUploadState extends State<ExImageUpload> {
 
     print(base64Image);
     var response =
-        await http.post(Session.getApiUrl(endpoint: "upload"), body: {
+        await dio.post(Session.getApiUrl(endpoint: "upload"), data: {
       "base64_image": base64Image,
     });
 
     print("Image Upload Response:");
-    print(response.body);
+    print(response.data);
 
-    var obj = json.decode(response.body);
+    var obj = json.decode(response.data);
     print(obj);
 
     if (this.mounted) {
