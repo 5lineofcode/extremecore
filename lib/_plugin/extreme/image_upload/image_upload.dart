@@ -44,7 +44,7 @@ class ExImageUploadState extends State<ExImageUpload> {
     print("Image Upload Response:");
     print(response.data);
 
-    var obj = json.decode(response.data);
+    var obj = response.data;
     print(obj);
 
     if (this.mounted) {

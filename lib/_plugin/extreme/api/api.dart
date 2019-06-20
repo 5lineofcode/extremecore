@@ -2,48 +2,40 @@ import 'package:extremecore/core.dart';
 
 class Api {
   String endpoint = "no-endpoint";
-  PostResponse postResponse;
-
-  formatFields(fields) {
-    fields.forEach((key, value) {
-      fields[key] = value.toString();
-    });
-    return fields;
-  }
 
   Future customUrl(url) async {
     //!Get Table API
     await dio.get(url);
   }
 
-  Future getTable() async {
+  Future<Response> getTable() async {
     var url = Session.getApiUrl(endpoint: "table/${this.endpoint}");
     print(url);
 
     var response = await dio.get(url);
-    return Future.value(response.data);
+    return Future.value(response);
   }
 
-  Future getAll() async {
+  Future<Response> getAll() async {
     //!Get All Data Api
     var url = Session.getApiUrl(endpoint: "get-all/${this.endpoint}");
     var response = await dio.get(url);
-    return Future.value(response.data);
+    return Future.value(response);
   }
 
-  Future get(id) async {
+  Future<Response> get(id) async {
     //!Get Single Data Api
     var url = Session.getApiUrl(endpoint: "get/${this.endpoint}/$id");
     var response = await dio.get(url);
-    return response.data;
+    return Future.value(response);
   }
 
-  Future create(fields) async {
+  Future<Response> create(fields) async {
     var url = "${Session.host}public/api/create/${this.endpoint}";
 
     try {
       var response = await dio.post(url, data: fields);
-      return Future.value(response.data);
+      return Future.value(response);
     } catch ($e) {
       print("Request URL :" + url);
       print("Api CREATE ERROR >> SERVER SIDE ERROR | CAN'T PARSE JSON");
@@ -51,14 +43,13 @@ class Api {
     }
   }
 
-  Future<PostResponse> update(fields) async {
+  Future<Response> update(fields) async {
     //!Update Data API
     var url = "${Session.host}public/api/update/${this.endpoint}";
 
     try {
-      var response = await dio.post(url, data: formatFields(fields));
-      var updateResponse = PostResponse.fromJson(response.data);
-      return Future.value(updateResponse);
+      var response = await dio.post(url, data: fields);
+      return Future.value(response);
     } catch ($e) {
       print("Request URL :" + url);
       print("Api UPDATE ERROR >> SERVER SIDE ERROR | CAN'T PARSE JSON");
@@ -66,13 +57,12 @@ class Api {
     }
   }
 
-  Future<PostResponse> delete(id) async {
+  Future<Response> delete(id) async {
     //!Delete Data Ap
     var url = Session.getApiUrl(endpoint: "delete/${this.endpoint}/$id");
     var response = await dio.post(url);
 
-    var postResponse = PostResponse.fromJson(response.data);
-    return Future.value(postResponse);
+    return Future.value(response);
   }
 }
 

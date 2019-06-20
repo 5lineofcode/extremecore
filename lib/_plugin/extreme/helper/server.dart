@@ -134,21 +134,7 @@ class Server {
 
     var response = await dio.get(url);
 
-    var obj;
-    try {
-      obj = json.decode(response.data);
-      print("-----");
-      print("Loaded Data:");
-      print(obj);
-      print("-----");
-
-      return obj;
-    } catch (ex) {
-      print("Can't convert json to object");
-      print("Response Body:");
-      print(response.statusCode);
-      print(response.data);
-    }
+    var obj = response.data;
 
     return Future.value(obj);
   }
