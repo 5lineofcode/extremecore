@@ -52,7 +52,10 @@ class _ExListState extends State<ExList> {
       isLoading = true;
     });
 
+
+    // var obj = await Server.getTable(endpoint: apiDefinition.endpoint);
     var obj = await Server.getTable(endpoint: apiDefinition.endpoint);
+
     if (this.mounted) {
       setState(() {
         items = obj["data"];

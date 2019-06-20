@@ -28,7 +28,7 @@ class Session {
   static String lastBuildTime = "";
 
   static String getAssetUrl(String imageUrl) {
-    return "$host/sajiweb/public/" + imageUrl;
+    return "$host/public/" + imageUrl;
   }
 
   static String getUrl({

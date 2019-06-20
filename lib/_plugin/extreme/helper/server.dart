@@ -17,7 +17,7 @@ class PostResponse {
   static PostResponse fromJson(json) {
     print("post Response:");
     print(json);
-    
+
     return PostResponse(
       isSuccess: (json["is_success"] as bool),
       message: json["message"],
