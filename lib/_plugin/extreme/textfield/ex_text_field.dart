@@ -30,6 +30,7 @@ class ExTextField extends StatefulWidget {
 
   //event
   final dynamic onChanged;
+  final dynamic onFocus;
   final dynamic onSubmitted;
   final dynamic onContainerTap;
 
@@ -44,7 +45,7 @@ class ExTextField extends StatefulWidget {
     this.useBorder = false,
     this.usePassword = false,
     this.useIcon = false,
-    this.useSuffix = false,
+    this.useSuffix = true,
     this.useAutoFocus = false,
     this.textAlign = TextAlign.left,
     this.contentPadding = const EdgeInsets.all(8.0),
@@ -52,6 +53,7 @@ class ExTextField extends StatefulWidget {
     this.maxLength,
     this.maxLines,
     this.onChanged,
+    this.onFocus,
     this.onSubmitted,
     this.onContainerTap,
     this.enable = true,
@@ -67,6 +69,8 @@ class ExTextField extends StatefulWidget {
 class _ExTextFieldState extends State<ExTextField> {
   TextEditingController textEditingController = TextEditingController();
   FocusNode focusNode = FocusNode();
+
+  bool showSuffix = false;
 
   void saveToHistory(id, value) {
     // var storageInputHistory = LocalStorage.load(id + "_input_history");
@@ -95,6 +99,21 @@ class _ExTextFieldState extends State<ExTextField> {
       // saveToHistory(widget.id, textEditingController.text);
     });
 
+    //FocusNode
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        setState(() {
+          showSuffix = true;
+        });
+        widget.onFocus();
+      }
+      else {
+        setState(() {
+          showSuffix = false;
+        });
+      }
+    });
+
     super.initState();
   }
 
@@ -114,7 +133,7 @@ class _ExTextFieldState extends State<ExTextField> {
         padding: EdgeInsets.only(bottom: 8.0),
         child: TextField(
           keyboardType: widget.keyboardType,
-          focusNode: FocusNode(),
+          focusNode: focusNode,
           controller: textEditingController,
           obscureText: widget.usePassword,
           textAlign: widget.textAlign,
@@ -145,7 +164,7 @@ class _ExTextFieldState extends State<ExTextField> {
                     color: widget.prefixColor ?? Theme.of(context).hintColor,
                   )
                 : null,
-            suffixIcon: widget.useSuffix == true
+            suffixIcon: widget.useSuffix == true && showSuffix == true
                 ? IconButton(
                     icon: Icon(
                       Icons.close,

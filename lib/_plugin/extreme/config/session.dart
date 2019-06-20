@@ -18,18 +18,8 @@ class Session {
 
 
 
-
-
-
-
-
-
-
-
-
   //! URL SETTING
-  static String host = "http://saji.21flutter.com";
-
+  static String host = "";
   static String baseUrl = "$host/public/admin";
   static String apiUrl = "$host/public/api";
   static String publicUrl = "$host/public";

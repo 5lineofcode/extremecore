@@ -38,6 +38,8 @@ dependencies:
   auto_size_text: ^1.1.2
   timeline_list: ^0.0.3
   flutter_swiper: ^1.1.6
+  blue_thermal_printer: ^1.0.6
+  path_provider: ^1.1.0
 
   #Firebase, Google and Notification
   firebase_core: 0.4.0
