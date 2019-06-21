@@ -16,6 +16,7 @@ class ApiDefinition {
 
   //paging & filter & sorting
   final int pageCount;
+  final Map<String, dynamic> where; 
 
   ApiDefinition({
     @required this.endpoint,
@@ -24,11 +25,15 @@ class ApiDefinition {
     @required this.titleIndex,
     @required this.subtitleIndex,
 
-    //additional
+    //! Will Be Removed, because Custom Item Template
     this.headerLeft,
     this.headerRight,
     this.footerLeft,
     this.footerRight,
+    //###
+    
     this.pageCount = 10,
+
+    this.where,
   });
 }

@@ -1,3 +1,4 @@
+import 'package:extremecore/_plugin/extreme/api/post_response.dart';
 import 'package:extremecore/core.dart';
 
 class Api {
@@ -30,12 +31,11 @@ class Api {
     return Future.value(response);
   }
 
-  Future<Response> create(fields) async {
-    var url = "${Session.host}public/api/create/${this.endpoint}";
-
+  Future<PostResponse> create(fields) async {
+    var url = "${Session.host}/public/api/create/${this.endpoint}";
     try {
       var response = await dio.post(url, data: fields);
-      return Future.value(response);
+      return Future.value(PostResponse.fromJson(response.data));
     } catch ($e) {
       print("Request URL :" + url);
       print("Api CREATE ERROR >> SERVER SIDE ERROR | CAN'T PARSE JSON");
@@ -43,13 +43,13 @@ class Api {
     }
   }
 
-  Future<Response> update(fields) async {
+  Future<PostResponse> update(fields) async {
     //!Update Data API
-    var url = "${Session.host}public/api/update/${this.endpoint}";
+    var url = "${Session.host}/public/api/update/${this.endpoint}";
 
     try {
       var response = await dio.post(url, data: fields);
-      return Future.value(response);
+      return Future.value(PostResponse.fromJson(response.data));
     } catch ($e) {
       print("Request URL :" + url);
       print("Api UPDATE ERROR >> SERVER SIDE ERROR | CAN'T PARSE JSON");

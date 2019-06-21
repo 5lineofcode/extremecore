@@ -102,15 +102,20 @@ class _ExTextFieldState extends State<ExTextField> {
     //FocusNode
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
-        setState(() {
-          showSuffix = true;
-        });
-        widget.onFocus();
-      }
-      else {
-        setState(() {
-          showSuffix = false;
-        });
+        if (this.mounted) {
+          setState(() {
+            showSuffix = true;
+          });
+          if (widget.onFocus != null) {
+            widget.onFocus();
+          }
+        }
+      } else {
+        if (this.mounted) {
+          setState(() {
+            showSuffix = false;
+          });
+        }
       }
     });
 
@@ -120,7 +125,7 @@ class _ExTextFieldState extends State<ExTextField> {
   @override
   Widget build(BuildContext context) {
     if (Input.get(widget.id) != null) {
-      textEditingController.text = Input.get(widget.id).toString();
+      textEditingController.text = Input.get(widget.id).toString() == "null" ? "" : Input.get(widget.id).toString();
     }
 
     return InkWell(

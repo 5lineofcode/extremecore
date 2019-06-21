@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'core.dart';
 
 void main() async {
+
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

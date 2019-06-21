@@ -1,29 +1,6 @@
+import 'package:extremecore/_plugin/extreme/api/post_response.dart';
 import 'package:flutter/material.dart';
 import 'package:extremecore/core.dart';
-
-/*
-Need Feature
-Select Where
-*/
-class PostResponse {
-  bool isSuccess;
-  String message;
-
-  PostResponse({
-    this.isSuccess,
-    this.message,
-  });
-
-  static PostResponse fromJson(json) {
-    print("post Response:");
-    print(json);
-
-    return PostResponse(
-      isSuccess: (json["is_success"] as bool),
-      message: json["message"],
-    );
-  }
-}
 
 class Server {
   static Future<PostResponse> create({
