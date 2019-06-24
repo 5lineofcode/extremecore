@@ -108,7 +108,7 @@ class ExImageUploadState extends State<ExImageUpload> {
   getImagePreview() {
     if (imageUrl != "" && imageUrl != null && imageUrl != "null") {
       return FadeInImage(
-        placeholder: AssetImage("assets/images/loading.gif"),
+        placeholder: AssetImage("assets/gif/saji_logo_only_black.gif"),
         image: NetworkImage(Session.getAssetUrl(imageUrl)),
 
       );

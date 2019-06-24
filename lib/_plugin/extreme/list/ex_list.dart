@@ -318,7 +318,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                                         height: 60.0,
                                         child: FadeInImage(
                                           placeholder: AssetImage(
-                                              "assets/images/loading.gif"),
+                                              "assets/gif/saji_logo_only_black.gif"),
                                           image: item[apiDefinition
                                                       .leadingPhotoIndex] !=
                                                   null

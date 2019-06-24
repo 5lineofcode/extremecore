@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:flutter/material.dart';
 
 class Session {
   //User Data
@@ -11,6 +12,8 @@ class Session {
   static String mobile;
 
   static bool isLogin = false;
+
+  static Color themeColor = Color(0xffA40C33);
 
 
 
