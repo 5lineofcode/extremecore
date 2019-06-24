@@ -38,6 +38,9 @@ var dio = Dio();
 class ExtremeCore {
   init() {
     dio.interceptors.add(CookieManager(CookieJar()));
+    // dio.options.connectTimeout = 10000;
+    // dio.options.receiveTimeout = 10000;
+    // dio.options.sendTimeout = 10000;
   }
 }
 

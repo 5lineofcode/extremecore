@@ -20,6 +20,7 @@ class Api {
   Future<Response> getAll() async {
     //!Get All Data Api
     var url = Session.getApiUrl(endpoint: "get-all/${this.endpoint}");
+    print(url);
     var response = await dio.get(url);
     return Future.value(response);
   }
@@ -27,6 +28,7 @@ class Api {
   Future<Response> get(id) async {
     //!Get Single Data Api
     var url = Session.getApiUrl(endpoint: "get/${this.endpoint}/$id");
+    print(url);
     var response = await dio.get(url);
     return Future.value(response);
   }
