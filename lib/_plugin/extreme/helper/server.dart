@@ -166,9 +166,11 @@ class Alert {
 
 class Loading {
   static show() {
-    return Container(
-      child: Center(
-        child: Text("Loading..."),
+    return Scaffold(
+      body: Container(
+        child: Center(
+          child: Text("Loading..."),
+        ),
       ),
     );
   }
