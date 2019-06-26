@@ -19,7 +19,8 @@ class Input {
     // valueList[id] = value;
   }
 
-  static setThousandSeparator(double number) {
+  static setThousandSeparator(dynamic param) {
+    double number = double.parse(param.toString());
     final formatter = NumberFormat("###,###.##", "id-ID");
     return formatter.format(number);
   }

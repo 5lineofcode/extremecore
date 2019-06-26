@@ -33,6 +33,7 @@ class ExImageUploadState extends State<ExImageUpload> {
       print("Image can't be null");
       return;
     }
+
     String base64Image = base64Encode(image.readAsBytesSync());
 
     print(base64Image);
@@ -60,8 +61,8 @@ class ExImageUploadState extends State<ExImageUpload> {
   Future browseCamera() async {
     var image = await ImagePicker.pickImage(
       source: ImageSource.camera,
-      maxHeight: 800,
-      maxWidth: 800,
+      maxHeight: 300,
+      maxWidth: 300,
     );
     setState(() {
       uploadImage(image);
@@ -71,8 +72,8 @@ class ExImageUploadState extends State<ExImageUpload> {
   Future browseGallery() async {
     var image = await ImagePicker.pickImage(
       source: ImageSource.gallery,
-      maxHeight: 800,
-      maxWidth: 800,
+      maxHeight: 300,
+      maxWidth: 300,
     );
     setState(() {
       uploadImage(image);
