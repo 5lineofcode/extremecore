@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:extremecore/core.dart';
 
 import 'mapview.dart';
