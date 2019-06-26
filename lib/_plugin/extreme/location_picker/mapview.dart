@@ -59,6 +59,7 @@ class GoogleMapViewState extends State<GoogleMapView> {
 
   static void updateSelectedMarker(lat, lng, address) {
     // GoogleMapViewState.controller.clearMarkers();
+
     GoogleMapViewState.controller.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(
         bearing: 270.0,
@@ -80,8 +81,23 @@ class GoogleMapViewState extends State<GoogleMapView> {
     zoom: 14.4746,
   );
 
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+
   @override
   Widget build(BuildContext context) {
+    var markerId = MarkerId("1001");
+    Marker marker = Marker(
+      markerId: markerId,
+      draggable: true,
+      position: LatLng(
+        37.42796133580664,
+        -122.085749655962,
+      ),
+      infoWindow: InfoWindow(title: "Marker 1001", snippet: '*'),
+      onTap: () {},
+    );
+    markers[markerId] = marker;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -90,6 +106,7 @@ class GoogleMapViewState extends State<GoogleMapView> {
           child: GoogleMap(
             initialCameraPosition: _kGooglePlex,
             onMapCreated: _onMapCreated,
+            markers: Set<Marker>.of(markers.values),
             // options: GoogleMapOptions(
             //   cameraPosition: const CameraPosition(
             //     target: LatLng(-33.852, 151.211),
