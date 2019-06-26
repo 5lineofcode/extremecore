@@ -86,13 +86,15 @@ class GoogleMapViewState extends State<GoogleMapView> {
   @override
   Widget build(BuildContext context) {
     var markerId = MarkerId("1001");
+    var markerPosition = LatLng(
+      37.42796133580664,
+      -122.085749655962,
+    );
+    
     Marker marker = Marker(
       markerId: markerId,
       draggable: true,
-      position: LatLng(
-        37.42796133580664,
-        -122.085749655962,
-      ),
+      position: markerPosition,
       infoWindow: InfoWindow(title: "Marker 1001", snippet: '*'),
       onTap: () {},
     );
