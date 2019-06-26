@@ -1,7 +1,5 @@
 import 'package:extremecore/core.dart';
 import 'package:flutter/material.dart';
-
-import 'api.dart';
 import 'listview.dart';
 
 class ExLocationPicker extends StatefulWidget {
@@ -48,24 +46,12 @@ class _ExLocationPickerState extends State<ExLocationPicker> {
       children: <Widget>[
         InkWell(
           onTap: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return GooglePlaceAutoCompleteSearchWidgetListView(
-                  id: widget.id,
-                );
-              },
-            ).then((value) {
-              print(Input.get("${widget.id}_id"));
-              print(Input.get("${widget.id}_placeId"));
-
-              String placeId = Input.get("${widget.id}_placeId");
-              GooglePlaceApi.getPlaceDetail(placeId, "");
-
-              setState(() {
-                textEditingController.text = value;
-              });
-            });
+            Page.show(
+              context,
+              GooglePlaceAutoCompleteSearchWidgetListView(
+                id: widget.id,
+              ),
+            );
           },
           child: TextField(
             controller: textEditingController,

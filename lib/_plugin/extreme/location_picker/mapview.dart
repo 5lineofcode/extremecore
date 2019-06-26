@@ -1,7 +1,3 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -18,51 +14,51 @@ class GoogleMapViewState extends State<GoogleMapView> {
   static final LatLng center = const LatLng(-6.5977465, 106.7283743);
 
   static GoogleMapController controller;
-  int _markerCount = 0;
+  // int _markerCount = 0;
   static Marker selectedMarker;
 
   void _onMapCreated(GoogleMapController mapController) {
     GoogleMapViewState.controller = mapController;
-    GoogleMapViewState.controller.onMarkerTapped.add(_onMarkerTapped);
+    // GoogleMapViewState.controller.onMarkerTapped.add(_onMarkerTapped);
 
     _initMarker();
   }
 
   void _initMarker() {
-    controller.addMarker(MarkerOptions(
-      position: LatLng(-6.5977465, 106.7283743),
-      draggable: true,
-      infoWindowText: InfoWindowText('Marker #${_markerCount + 1}', '*'),
-    ));
+    // controller.addMarker(MarkerOptions(
+    //   position: LatLng(-6.5977465, 106.7283743),
+    //   draggable: true,
+    //   infoWindowText: InfoWindowText('Marker #${_markerCount + 1}', '*'),
+    // ));
 
-    controller.animateCamera(CameraUpdate.newCameraPosition(
-      const CameraPosition(
-        bearing: 270.0,
-        target: LatLng(-6.5977465, 106.7283743),
-        tilt: 30.0,
-        zoom: 17.0,
-      ),
-    ));
+    // controller.animateCamera(CameraUpdate.newCameraPosition(
+    //   const CameraPosition(
+    //     bearing: 270.0,
+    //     target: LatLng(-6.5977465, 106.7283743),
+    //     tilt: 30.0,
+    //     zoom: 17.0,
+    //   ),
+    // ));
 
     setState(() {
-      _markerCount += 1;
+      // _markerCount += 1;
     });
   }
 
   @override
   void dispose() {
-    controller?.onMarkerTapped?.remove(_onMarkerTapped);
+    // controller?.onMarkerTapped?.remove(_onMarkerTapped);
     super.dispose();
   }
 
-  void _onMarkerTapped(Marker marker) {
-    setState(() {
-      selectedMarker = marker;
-    });
-  }
+  // void _onMarkerTapped(Marker marker) {
+  //   setState(() {
+  //     selectedMarker = marker;
+  //   });
+  // }
 
   static void updateSelectedMarker(lat, lng, address) {
-    GoogleMapViewState.controller.clearMarkers();
+    // GoogleMapViewState.controller.clearMarkers();
     GoogleMapViewState.controller.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(
         bearing: 270.0,
@@ -72,11 +68,11 @@ class GoogleMapViewState extends State<GoogleMapView> {
       ),
     ));
 
-    GoogleMapViewState.controller.addMarker(MarkerOptions(
-      position: LatLng(lat, lng),
-      draggable: true,
-      infoWindowText: InfoWindowText('Tujuan:', address),
-    ));
+    // GoogleMapViewState.controller.addMarker(MarkerOptions(
+    //   position: LatLng(lat, lng),
+    //   draggable: true,
+    //   infoWindowText: InfoWindowText('Tujuan:', address),
+    // ));
   }
 
   static final CameraPosition _kGooglePlex = CameraPosition(
@@ -94,12 +90,12 @@ class GoogleMapViewState extends State<GoogleMapView> {
           child: GoogleMap(
             initialCameraPosition: _kGooglePlex,
             onMapCreated: _onMapCreated,
-            options: GoogleMapOptions(
-              cameraPosition: const CameraPosition(
-                target: LatLng(-33.852, 151.211),
-                zoom: 11.0,
-              ),
-            ),
+            // options: GoogleMapOptions(
+            //   cameraPosition: const CameraPosition(
+            //     target: LatLng(-33.852, 151.211),
+            //     zoom: 11.0,
+            //   ),
+            // ),
           ),
         ),
       ],

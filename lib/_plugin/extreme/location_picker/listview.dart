@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'api.dart';
 import 'mapview.dart';
+import 'model.dart';
 
 class GooglePlaceAutoCompleteSearchWidgetListView extends StatefulWidget {
   final String id;
@@ -20,7 +21,6 @@ class GooglePlaceAutoCompleteSearchWidgetListViewState
   TextEditingController textEditingController = TextEditingController();
   FocusNode focusNode = FocusNode();
   double listViewHeight = 200;
-
   String searchValue;
   String oldValue;
 
@@ -44,10 +44,9 @@ class GooglePlaceAutoCompleteSearchWidgetListViewState
 
       textEditingController.text = searchValue;
 
-      String address = Input.get(widget.id);
-      String placeId = Input.get("placeId");
-
-      GooglePlaceApi.getPlaceDetail(placeId, address);
+      // String address = Input.get(widget.id);
+      // String placeId = Input.get("placeId");
+      // GooglePlaceApi.getPlaceDetail(placeId, address);
     } catch (e) {
       print("ERROR XXI");
       return;
@@ -95,7 +94,7 @@ class GooglePlaceAutoCompleteSearchWidgetListViewState
               actions: <Widget>[
                 new FlatButton(
                     child: new Text('CANCEL'),
-                    onPressed: () => Navigator.of(context).pop()),
+                    onPressed: () => Navigator.pop(context)),
                 new FlatButton(
                     child: new Text(
                       'BACK',
@@ -140,7 +139,7 @@ class GooglePlaceAutoCompleteSearchWidgetListViewState
             icon: Icon(Icons.check),
             color: Colors.green,
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.pop(context);
             },
           ),
           SizedBox(
@@ -197,10 +196,9 @@ class GooglePlaceAutoCompleteSearchWidgetListViewState
                         title: Text('${searchResult.description}'),
                       ),
                       onTap: () {
-                        Input.setValue(widget.id, searchResult.description);
-                        Input.setValue("${widget.id}_id", searchResult.id);
-                        Input.setValue(
-                            "${widget.id}_placeId", searchResult.placeId);
+                        Input.set(widget.id, searchResult.description);
+                        Input.set("${widget.id}_id", searchResult.id);
+                        Input.set("${widget.id}_placeId", searchResult.placeId);
 
                         this.setState(() {
                           listViewHeight = 0;
