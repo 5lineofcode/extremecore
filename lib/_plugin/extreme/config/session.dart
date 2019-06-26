@@ -13,9 +13,22 @@ class Session {
 
   static bool isLogin = false;
 
+  //? Colors
   static Color themeColor = Color(0xffA40C33);
-
-
+  static Color colorOccupied = Color(0xffDFC7B4);
+  static Color colorEmpty = Color(0xff8A8989);
+  static Color color01 = Color(0xff6B4595);
+  static Color color02 = Color(0xff335AA6);
+  static Color color03 = Color(0xff71C9E4);
+  static Color color04 = Color(0xff9CCC93);
+  static Color color05 = Color(0xffD0CA03);
+  static Color color06 = Color(0xffFFDC2E);
+  static Color color07 = Color(0xffCE8B0B);
+  static Color color08 = Color(0xffF28F5F);
+  static Color color09 = Color(0xffD991BE);
+  static Color color10 = Color(0xffDB6363);
+  static Color color11 = Color(0xffE6690B);
+  static Color color12 = Color(0xffE8441E);
 
 
 
