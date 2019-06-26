@@ -49,6 +49,7 @@ dependencies:
 
   #Google Maps
   google_maps_flutter: ^0.5.19
+  #google_maps_flutter: 0.0.3
 
 dev_dependencies:
   flutter_test:
