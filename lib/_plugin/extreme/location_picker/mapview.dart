@@ -58,8 +58,6 @@ class GoogleMapViewState extends State<GoogleMapView> {
   // }
 
   static void updateSelectedMarker(lat, lng, address) {
-    // GoogleMapViewState.controller.clearMarkers();
-
     GoogleMapViewState.controller.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(
         bearing: 270.0,
@@ -68,29 +66,17 @@ class GoogleMapViewState extends State<GoogleMapView> {
         zoom: 17.0,
       ),
     ));
-
-    // GoogleMapViewState.controller.addMarker(MarkerOptions(
-    //   position: LatLng(lat, lng),
-    //   draggable: true,
-    //   infoWindowText: InfoWindowText('Tujuan:', address),
-    // ));
   }
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
+  static Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
-  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
-
-  @override
-  Widget build(BuildContext context) {
-    var markerId = MarkerId("1001");
+  static addMarker(id, lat, lng) {
+    var markerId = MarkerId(id);
     var markerPosition = LatLng(
-      37.42796133580664,
-      -122.085749655962,
+      lat,
+      lng,
     );
-    
+
     Marker marker = Marker(
       markerId: markerId,
       draggable: true,
@@ -99,6 +85,19 @@ class GoogleMapViewState extends State<GoogleMapView> {
       onTap: () {},
     );
     markers[markerId] = marker;
+  }
+
+  double mapLat = 37.42796133580664;
+  double mapLng = -122.085749655962;
+
+  @override
+  Widget build(BuildContext context) {
+    addMarker("MyLocation", mapLat, mapLng);
+
+    CameraPosition mapCameraPosition = CameraPosition(
+      target: LatLng(mapLat, mapLng),
+      zoom: 14.4746,
+    );
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -106,8 +105,14 @@ class GoogleMapViewState extends State<GoogleMapView> {
       children: <Widget>[
         Expanded(
           child: GoogleMap(
-            initialCameraPosition: _kGooglePlex,
+            initialCameraPosition: mapCameraPosition,
             onMapCreated: _onMapCreated,
+            onCameraMove: (newCameraPositon) {
+              setState(() {
+                mapLat = newCameraPositon.target.latitude;
+                mapLng = newCameraPositon.target.longitude;
+              });
+            },
             markers: Set<Marker>.of(markers.values),
             // options: GoogleMapOptions(
             //   cameraPosition: const CameraPosition(

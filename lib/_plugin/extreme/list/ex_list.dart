@@ -11,17 +11,19 @@ class ExList extends StatefulWidget {
 
   final bool noFloatingActionButton;
   final bool noActionsButton;
+  final bool noAppBar;
 
   final formPageTemplate;
   final editPageTemplate;
 
   ExList({
-    @required this.title,
+    this.title = "",
     @required this.apiDefinition,
     this.onTap,
     this.onItemSelected,
     this.noFloatingActionButton = false,
     this.noActionsButton = false,
+    this.noAppBar = false,
     this.formPageTemplate,
     this.editPageTemplate,
   });
@@ -78,7 +80,7 @@ class _ExListState extends State<ExList> {
     print("Loading Data from $url");
 
     var response = await dio.get(url);
-    var obj = json.decode(response.data);
+    var obj = response.data;
 
     print(obj);
     setState(() {
@@ -178,28 +180,64 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     );
   }
 
+  getDefaultItemTemplate(item) {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          ExListHeader.getHeader(widget.apiDefinition),
+          ListTile(
+            leading: apiDefinition.leadingPhotoIndex != null
+                ? Container(
+                    width: 60.0,
+                    height: 60.0,
+                    child: FadeInImage(
+                      placeholder:
+                          AssetImage("assets/gif/saji_logo_only_black.gif"),
+                      image: item[apiDefinition.leadingPhotoIndex] != null
+                          ? NetworkImage(
+                              "${Session.publicUrl}/${item[apiDefinition.leadingPhotoIndex]}")
+                          : AssetImage("assets/images/no_pict.png"),
+                    ),
+                  )
+                : null,
+            title: apiDefinition.titleIndex != null
+                ? Text(item[apiDefinition.titleIndex].toString())
+                : null,
+            subtitle: apiDefinition.subtitleIndex != null
+                ? Text(item[apiDefinition.subtitleIndex].toString())
+                : null,
+          ),
+          ExListFooter.getFooter(widget.apiDefinition),
+        ],
+      ),
+      semanticContainer: true,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(widget.title),
-          actions: widget.noActionsButton == true
-              ? []
-              : [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () {
-                        _showSortOptions(context);
-                      },
-                      child: Icon(Icons.sort),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.search),
-                  )
-                ]),
+      appBar: widget.noAppBar
+          ? null
+          : AppBar(
+              title: Text(widget.title),
+              actions: widget.noActionsButton == true
+                  ? []
+                  : [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: InkWell(
+                          onTap: () {
+                            _showSortOptions(context);
+                          },
+                          child: Icon(Icons.sort),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.search),
+                      )
+                    ]),
       floatingActionButton: widget.noFloatingActionButton == true
           ? Container()
           : FloatingActionButton(
@@ -280,7 +318,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                         onTap: () {
                           if (widget.onItemSelected != null) {
                             widget.onItemSelected(item);
-                            Navigator.of(context).pop();
+                            // Navigator.of(context).pop();
                             return;
                           }
 
@@ -307,42 +345,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                             );
                           }
                         },
-                        child: Card(
-                          child: Column(
-                            children: <Widget>[
-                              ExListHeader.getHeader(widget.apiDefinition),
-                              ListTile(
-                                leading: apiDefinition.leadingPhotoIndex != null
-                                    ? Container(
-                                        width: 60.0,
-                                        height: 60.0,
-                                        child: FadeInImage(
-                                          placeholder: AssetImage(
-                                              "assets/gif/saji_logo_only_black.gif"),
-                                          image: item[apiDefinition
-                                                      .leadingPhotoIndex] !=
-                                                  null
-                                              ? NetworkImage(
-                                                  "${Session.publicUrl}/${item[apiDefinition.leadingPhotoIndex]}")
-                                              : AssetImage(
-                                                  "assets/images/no_pict.png"),
-                                        ),
-                                      )
-                                    : null,
-                                title: apiDefinition.titleIndex != null
-                                    ? Text(item[apiDefinition.titleIndex]
-                                        .toString())
-                                    : null,
-                                subtitle: apiDefinition.subtitleIndex != null
-                                    ? Text(item[apiDefinition.subtitleIndex]
-                                        .toString())
-                                    : null,
-                              ),
-                              ExListFooter.getFooter(widget.apiDefinition),
-                            ],
-                          ),
-                          semanticContainer: true,
-                        ),
+                        child: getDefaultItemTemplate(item),
                       ),
                     );
                   },
