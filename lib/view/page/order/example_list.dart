@@ -1,7 +1,7 @@
 import 'package:extremecore/core.dart';
 import 'package:flutter/material.dart';
 
-class NewOrder extends StatelessWidget {
+class ExampleList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var mainListView = ExList(
@@ -30,12 +30,11 @@ class NewOrder extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: <Widget>[
-              Text(item["table_number"].toString() + " - " + item["order_id"]),
-              Spacer(),
-              Checkbox(
-                value: true,
-                onChanged: (checked){},
-              ),
+              Text(item["table_number"].toString() +
+                  " - " +
+                  item["order_id"] +
+                  " - " +
+                  item["status"]),
             ],
           ),
         );
@@ -53,10 +52,19 @@ class NewOrder extends StatelessWidget {
           Container(
             height: 50.0,
             padding: EdgeInsets.all(10.0),
-            color: Colors.blue,
+            color: Colors.red[200],
             child: Row(
               children: <Widget>[
                 Text("Order ID: 122"),
+                Spacer(),
+                ExButton(
+                  label: "Refresh",
+                  icon: Icons.refresh,
+                  type: ButtonType.primary,
+                  onPressed: () {
+                    ExListState.reload();
+                  },
+                ),
               ],
             ),
           ),

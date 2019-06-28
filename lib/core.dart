@@ -21,8 +21,6 @@ export './_plugin/extreme/image_slider/dotsindicator.dart';
 export './_plugin/extreme/image_slider/image_slider.dart';
 export './_plugin/extreme/image_upload/image_upload.dart';
 export './_plugin/extreme/list/ex_list.dart';
-export './_plugin/extreme/list/ex_list_footer.dart';
-export './_plugin/extreme/list/ex_list_header.dart';
 export './_plugin/extreme/list/ex_local_list.dart';
 export './_plugin/extreme/local_storage/local_storage.dart';
 export './_plugin/extreme/textfield/ex_date_picker.dart';

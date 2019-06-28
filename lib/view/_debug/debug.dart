@@ -1,7 +1,8 @@
 import 'package:extremecore/_plugin/extreme/button/template/ibutton.dart';
 import 'package:extremecore/_plugin/extreme/location_picker/ex_location_picker.dart';
 import 'package:extremecore/core.dart';
-import 'package:extremecore/view/page/order/new_order.dart';
+import 'package:extremecore/view/page/order/example_checklist.dart';
+import 'package:extremecore/view/page/order/example_list.dart';
 import 'package:extremecore/view/page/swiper-example/swiper_example.dart';
 import 'package:extremecore/view/page/timeline-example/timeline.dart';
 import 'package:flutter/material.dart';
@@ -61,9 +62,15 @@ class _DebugPageState extends State<DebugPage> {
               },
             ),
             IButton(
-              label: "Hack",
+              label: "Example List",
               onPressed: () {
-                Page.show(context, NewOrder());
+                Page.show(context, ExampleList());
+              },
+            ),
+            IButton(
+              label: "Example Checklist",
+              onPressed: () {
+                Page.show(context, ExampleChecklist());
               },
             ),
           ],
