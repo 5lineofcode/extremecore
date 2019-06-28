@@ -34,19 +34,25 @@ class ExList extends StatefulWidget {
   });
 
   @override
-  _ExListState createState() => _ExListState();
+  ExListState createState() => ExListState();
 }
 
-class _ExListState extends State<ExList> {
+class ExListState extends State<ExList> {
   ApiDefinition apiDefinition;
   RefreshController _refreshController;
 
-  List items = [];
+  static ExListState instance;
+  static List items = [];
   String nextPageUrl;
   String prevUrl;
 
+  static reload() {
+    ExListState.instance.setState(() {});
+  }
+
   @override
   void initState() {
+    ExListState.instance = this;
     super.initState();
     apiDefinition = widget.apiDefinition;
     _refreshController = RefreshController();
@@ -205,7 +211,6 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     return Card(
       child: Column(
         children: <Widget>[
-          ExListHeader.getHeader(widget.apiDefinition),
           ListTile(
             leading: apiDefinition.leadingPhotoIndex != null
                 ? Container(
@@ -228,7 +233,6 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                 ? Text(item[apiDefinition.subtitleIndex].toString())
                 : null,
           ),
-          ExListFooter.getFooter(widget.apiDefinition),
         ],
       ),
       semanticContainer: true,
@@ -319,7 +323,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                     if (widget.noDelete) {
                       return getDefaultItemTemplate(context, item, index);
                     }
-                    
+
                     return Dismissible(
                       key: Key(item[apiDefinition.primaryKey].toString()),
                       confirmDismiss: (DismissDirection dismissDirection) {

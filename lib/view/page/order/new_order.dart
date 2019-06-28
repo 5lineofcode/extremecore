@@ -34,7 +34,7 @@ class NewOrder extends StatelessWidget {
               Spacer(),
               Checkbox(
                 value: true,
-                onChanged: (checked){},
+                onChanged: (checked) {},
               ),
             ],
           ),
@@ -53,10 +53,20 @@ class NewOrder extends StatelessWidget {
           Container(
             height: 50.0,
             padding: EdgeInsets.all(10.0),
-            color: Colors.blue,
+            color: Colors.red[200],
             child: Row(
               children: <Widget>[
                 Text("Order ID: 122"),
+                Spacer(),
+                ExButton(
+                  label: "Refresh",
+                  icon: Icons.refresh,
+                  type: ButtonType.primary,
+                  onPressed: () {
+                    ExListState.items.clear();
+                    ExListState.reload();
+                  },
+                ),
               ],
             ),
           ),
