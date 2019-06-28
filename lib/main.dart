@@ -4,13 +4,26 @@ import 'package:flutter/services.dart';
 import 'core.dart';
 
 void main() async {
-
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
+  await autoLogin();
   runApp(MyApp());
+}
+
+Future autoLogin() async {
+  ExtremeCore().init();
+
+  Session.host = "http://192.168.6.234/sajiweb";
+
+  var url = Session.apiUrl + "/custom/auth/login";
+  print("Login: $url");
+  await dio.post(url, data: {
+    "email": "uzumaki@mailinator.com",
+    "password": "101",
+  });
 }
 
 class MyApp extends StatelessWidget {

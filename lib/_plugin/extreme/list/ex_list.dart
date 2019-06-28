@@ -12,9 +12,12 @@ class ExList extends StatefulWidget {
   final bool noFloatingActionButton;
   final bool noActionsButton;
   final bool noAppBar;
+  final bool noDelete;
 
   final formPageTemplate;
   final editPageTemplate;
+
+  final dynamic itemBuilder;
 
   ExList({
     this.title = "",
@@ -24,8 +27,10 @@ class ExList extends StatefulWidget {
     this.noFloatingActionButton = false,
     this.noActionsButton = false,
     this.noAppBar = false,
+    this.noDelete = false,
     this.formPageTemplate,
     this.editPageTemplate,
+    this.itemBuilder,
   });
 
   @override
@@ -55,7 +60,19 @@ class _ExListState extends State<ExList> {
     });
 
     // var obj = await Server.getTable(endpoint: apiDefinition.endpoint);
-    var obj = await Server.getTable(endpoint: apiDefinition.endpoint);
+
+    var whereQuery = "";
+    apiDefinition.where.forEach((key, value) {
+      whereQuery = "f_$key=$value";
+    });
+
+    whereQuery = whereQuery.length == 0 ? "" : "?$whereQuery";
+
+    var url = Session.apiUrl + "/table/${apiDefinition.endpoint}$whereQuery";
+    var response = await dio.get(url);
+    var obj = response.data;
+
+    print("ExList LoadData : $url");
 
     if (this.mounted) {
       setState(() {
@@ -180,7 +197,11 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     );
   }
 
-  getDefaultItemTemplate(item) {
+  getDefaultItemTemplate(context, item, index) {
+    if (widget.itemBuilder != null) {
+      return widget.itemBuilder(context, item, index);
+    }
+
     return Card(
       child: Column(
         children: <Widget>[
@@ -295,6 +316,10 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                   itemBuilder: (context, index) {
                     var item = items[index];
 
+                    if (widget.noDelete) {
+                      return getDefaultItemTemplate(context, item, index);
+                    }
+                    
                     return Dismissible(
                       key: Key(item[apiDefinition.primaryKey].toString()),
                       confirmDismiss: (DismissDirection dismissDirection) {
@@ -345,7 +370,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                             );
                           }
                         },
-                        child: getDefaultItemTemplate(item),
+                        child: getDefaultItemTemplate(context, item, index),
                       ),
                     );
                   },
