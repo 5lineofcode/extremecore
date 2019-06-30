@@ -16,7 +16,9 @@ class ApiDefinition {
 
   //paging & filter & sorting
   final int pageCount;
-  final Map<String, dynamic> where; 
+  final Map<String, dynamic> where;
+  final String sortField;
+  final String sortOrder;
 
   ApiDefinition({
     @required this.endpoint,
@@ -31,9 +33,10 @@ class ApiDefinition {
     this.footerLeft,
     this.footerRight,
     //###
-    
-    this.pageCount = 10,
 
+    this.pageCount = 10,
     this.where,
+    this.sortField,
+    this.sortOrder: "asc",
   });
 }

@@ -34,25 +34,25 @@ class ExList extends StatefulWidget {
   });
 
   @override
-  ExListState createState() => ExListState();
+  EX createState() => EX();
 }
 
-class ExListState extends State<ExList> {
+class EX extends State<ExList> {
   ApiDefinition apiDefinition;
   RefreshController _refreshController;
 
-  static ExListState instance;
+  static EX instance;
   static List items = [];
   String nextPageUrl;
   String prevUrl;
 
   static reload() {
-    ExListState.instance.setState(() {});
+    EX.instance.setState(() {});
   }
 
   @override
   void initState() {
-    ExListState.instance = this;
+    EX.instance = this;
     super.initState();
     apiDefinition = widget.apiDefinition;
     _refreshController = RefreshController();
@@ -71,10 +71,20 @@ class ExListState extends State<ExList> {
     apiDefinition.where.forEach((key, value) {
       whereQuery = "f_$key=$value";
     });
-
     whereQuery = whereQuery.length == 0 ? "" : "?$whereQuery";
 
-    var url = Session.apiUrl + "/table/${apiDefinition.endpoint}$whereQuery";
+    var sortQuery = "";
+    if(apiDefinition.sortField!=null){
+      if(whereQuery.length==0){
+        sortQuery = "?";
+      }
+      else {
+        sortQuery = "&";
+      }
+      sortQuery += "sort_field=${apiDefinition.sortField}&sort_order=${apiDefinition.sortOrder}";
+    }
+
+    var url = Session.apiUrl + "/table/${apiDefinition.endpoint}$whereQuery$sortQuery";
     var response = await dio.get(url);
     var obj = response.data;
 

@@ -28,12 +28,12 @@ class ExampleChecklist extends StatelessWidget {
       itemBuilder: (context, item, index) {
         return InkWell(
           onTap: () {
-            if (ExListState.items[index]["status"] == "USED") {
-              ExListState.items[index]["status"] = "AVAILABLE";
+            if (EX.items[index]["status"] == "USED") {
+              EX.items[index]["status"] = "AVAILABLE";
             } else {
-              ExListState.items[index]["status"] = "USED";
+              EX.items[index]["status"] = "USED";
             }
-            ExListState.reload();
+            EX.reload();
             print("RELOAD!");
           },
           child: Padding(
@@ -49,12 +49,12 @@ class ExampleChecklist extends StatelessWidget {
                 Checkbox(
                   value: item["status"] == "AVAILABLE" ? false : true,
                   onChanged: (checked) {
-                    if (ExListState.items[index]["status"] == "USED") {
-                      ExListState.items[index]["status"] = "AVAILABLE";
+                    if (EX.items[index]["status"] == "USED") {
+                      EX.items[index]["status"] = "AVAILABLE";
                     } else {
-                      ExListState.items[index]["status"] = "USED";
+                      EX.items[index]["status"] = "USED";
                     }
-                    ExListState.reload();
+                    EX.reload();
                     print("RELOAD!");
                   },
                 ),
@@ -86,7 +86,7 @@ class ExampleChecklist extends StatelessWidget {
                   icon: Icons.refresh,
                   type: ButtonType.primary,
                   onPressed: () {
-                    ExListState.reload();
+                    EX.reload();
                   },
                 ),
               ],
