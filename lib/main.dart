@@ -15,15 +15,6 @@ void main() async {
 
 Future autoLogin() async {
   ExtremeCore().init();
-
-  Session.host = "http://192.168.43.82/sajiweb";
-
-  var url = Session.apiUrl + "/custom/auth/login";
-  print("Login: $url");
-  await dio.post(url, data: {
-    "email": "uzumaki@mailinator.com",
-    "password": "101",
-  });
 }
 
 class MyApp extends StatelessWidget {

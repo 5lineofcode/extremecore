@@ -1,3 +1,4 @@
+import 'package:extremecore/_plugin/extreme/api/http.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistExamplePage extends StatefulWidget {
@@ -73,6 +74,20 @@ class _ChecklistExamplePageState extends State<ChecklistExamplePage> {
         );
       },
     );
+  }
+
+  ExtremeHttp http = ExtremeHttp();
+
+  @override
+  void initState() {
+    super.initState();
+    test();
+  }
+
+  Future test() async {
+    var response =
+        await http.get("http://192.168.43.82/sajiweb/public/api/get-all/users");
+    print("Callback : " + response.toString());
   }
 
   @override
