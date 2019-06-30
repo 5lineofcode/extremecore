@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:extremecore/core.dart';
-import 'package:extremecore/view/page/order/example_list.dart';
 import 'package:flutter/material.dart';
 
 class ExtremeHttp {
@@ -13,13 +12,10 @@ class ExtremeHttp {
     print("Request: " + url);
 
     try {
+      dio.options.sendTimeout = 100;
+      dio.options.receiveTimeout = 100;
 
       var response = await dio.get(url);
-
-      if (response == null) {
-        print("RTO :(");
-        return;
-      }
 
       print("Response:::");
       print("StatusCode : ${response.statusCode}");
@@ -27,16 +23,31 @@ class ExtremeHttp {
       return;
     } catch (error) {
       if (error is DioError) {
+        var errorDescription;
         switch (error.type) {
-          case DioErrorType.CONNECT_TIMEOUT:
-            print("CONNECTION_TIMEOUT");
+          case DioErrorType.CANCEL:
+            errorDescription = "Request to API server was cancelled";
             break;
-          default:
-            print(error.toString());
+          case DioErrorType.CONNECT_TIMEOUT:
+            errorDescription = "Connection timeout with API server";
+            break;
+          case DioErrorType.DEFAULT:
+            errorDescription =
+                "Connection to API server failed due to internet connection";
+            break;
+          case DioErrorType.RECEIVE_TIMEOUT:
+            errorDescription = "Receive timeout in connection with API server";
+            break;
+          case DioErrorType.SEND_TIMEOUT:
+            errorDescription = "Send timeout in connection with API server";
+            break;
+          case DioErrorType.RESPONSE:
+            errorDescription =
+                "Received invalid status code: ${error.response.statusCode}";
             break;
         }
+        print(errorDescription);
       }
-      print("Response is Null, Server ERROR");
       return;
     }
   }
