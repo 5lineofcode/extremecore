@@ -62,7 +62,7 @@ class ExampleList extends StatelessWidget {
                   icon: Icons.refresh,
                   type: ButtonType.primary,
                   onPressed: () {
-                    ExListState.reload();
+                    EX.reload();
                   },
                 ),
               ],
