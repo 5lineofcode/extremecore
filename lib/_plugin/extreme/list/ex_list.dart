@@ -68,25 +68,30 @@ class EX extends State<ExList> {
     // var obj = await Server.getTable(endpoint: apiDefinition.endpoint);
 
     var whereQuery = "";
-    apiDefinition.where.forEach((key, value) {
-      whereQuery = "f_$key=$value";
-    });
-    whereQuery = whereQuery.length == 0 ? "" : "?$whereQuery";
-
-    var sortQuery = "";
-    if(apiDefinition.sortField!=null){
-      if(whereQuery.length==0){
-        sortQuery = "?";
-      }
-      else {
-        sortQuery = "&";
-      }
-      sortQuery += "sort_field=${apiDefinition.sortField}&sort_order=${apiDefinition.sortOrder}";
+    if (apiDefinition.where != null) {
+      apiDefinition.where.forEach((key, value) {
+        whereQuery = "f_$key=$value";
+      });
+      whereQuery = whereQuery.length == 0 ? "" : "?$whereQuery";
     }
 
-    var url = Session.apiUrl + "/table/${apiDefinition.endpoint}$whereQuery$sortQuery";
-    var response = await dio.get(url);
-    var obj = response.data;
+    var sortQuery = "";
+    if (apiDefinition.sortField != null) {
+      if (whereQuery.length == 0) {
+        sortQuery = "?";
+      } else {
+        sortQuery = "&";
+      }
+      sortQuery +=
+          "sort_field=${apiDefinition.sortField}&sort_order=${apiDefinition.sortOrder}";
+    }
+
+    var url = Session.apiUrl +
+        "/table/${apiDefinition.endpoint}$whereQuery$sortQuery";
+    var response = await http.get(url);
+
+    print(response.toString());
+    var obj = response;
 
     print("ExList LoadData : $url");
 
@@ -106,13 +111,15 @@ class EX extends State<ExList> {
     var url = Session.getApiUrl(
       endpoint: "delete/${apiDefinition.endpoint}/$id",
     );
-    await dio.post(url);
+    await http.post(url, {
+      "id": id,
+    });
   }
 
   void loadNextPage(url) async {
     print("Loading Data from $url");
 
-    var response = await dio.get(url);
+    var response = await http.get(url);
     var obj = response.data;
 
     print(obj);

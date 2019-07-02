@@ -1,4 +1,4 @@
-import 'package:extremecore/_plugin/extreme/api/http.dart';
+import 'package:extremecore/core.dart';
 import 'package:flutter/material.dart';
 
 class ChecklistExamplePage extends StatefulWidget {
@@ -75,8 +75,6 @@ class _ChecklistExamplePageState extends State<ChecklistExamplePage> {
       },
     );
   }
-
-  ExtremeHttp http = ExtremeHttp();
 
   @override
   void initState() {

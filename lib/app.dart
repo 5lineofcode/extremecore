@@ -25,6 +25,7 @@ export 'package:dio/dio.dart';
 export 'dart:math';
 
 import 'package:cookie_jar/cookie_jar.dart';
+import 'package:extremecore/_plugin/extreme/api/http.dart';
 
 import './_plugin/extreme/api/server_api.dart';
 import '_plugin/extreme/api/api.dart';
@@ -45,3 +46,4 @@ class ExtremeCore {
 }
 
 var extremeCore = ExtremeCore();
+var http = ExtremeHttp();
