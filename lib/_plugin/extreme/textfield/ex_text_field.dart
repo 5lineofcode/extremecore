@@ -152,7 +152,6 @@ class _ExTextFieldState extends State<ExTextField> {
             }
           },
           onSubmitted: (text) {
-            print("onSubmitted called");
             if (widget.onSubmitted != null) {
               widget.onSubmitted();
               SystemChannels.textInput.invokeMethod('TextInput.hide');

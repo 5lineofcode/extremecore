@@ -11,7 +11,7 @@ class ExtremeHttp {
   int maxRetryCount = 3;
 
   ExtremeHttp() {
-    // dio.options.connectTimeout = 1000;
+    dio.options.connectTimeout = 5000;
     // dio.options.sendTimeout = 1000;
     // dio.options.receiveTimeout = 1000;
   }
@@ -39,6 +39,10 @@ class ExtremeHttp {
         requestDone = true;
         returnedResponse = response.data;
       } catch (error) {
+        // String prodHost = "http://192.168.6.234/sajiweb";
+        // String devHost = "http://192.168.43.82/sajiweb";
+
+        // Session.host = "http://192.168.6.333/sajiweb";
         requestCount++;
         if (requestCount <= maxRetryCount) {
           print("Retry Connection To: $url   $requestCount/$maxRetryCount");
@@ -58,13 +62,27 @@ class ExtremeHttp {
     int requestCount = 0;
     var returnedResponse;
 
+    // if(isMirrorServer){
+    //   Alert.show(context, message: "Can't Post New Data on Mirror Server");
+    //   return;
+    // }
+
     while (requestDone == false) {
+      print("----------------");
       print("POST: " + url);
+      print("PostData: ");
+      print(postData);
+      print("################");
+      
       try {
         var response = await dio.post(url, data: postData);
         handleUserDefinedError(response.data);
         requestDone = true;
         returnedResponse = response.data;
+
+        print("PostResponse: ");
+        print(returnedResponse);
+        print("~~~~~~~~~~~~~~");
       } catch (error) {
         requestCount++;
         if (requestCount <= maxRetryCount) {
