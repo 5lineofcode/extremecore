@@ -7,6 +7,8 @@ class ButtonType {
   static Color danger = Colors.red[400];
   static Color warning = Colors.orange;
   static Color info = Colors.lightBlue;
+  static Color selected = Session.themeColor;
+  static Color unSelected = Colors.grey;
 }
 
 class ExButton extends StatelessWidget {
