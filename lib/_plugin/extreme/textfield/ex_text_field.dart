@@ -145,12 +145,14 @@ class _ExTextFieldState extends State<ExTextField> {
           autofocus: widget.useAutoFocus,
           enabled: widget.enable,
           onChanged: (text) {
+            print("onChanged called");
             if (widget.onChanged != null) {
               widget.onChanged();
               SystemChannels.textInput.invokeMethod('TextInput.hide');
             }
           },
           onSubmitted: (text) {
+            print("onSubmitted called");
             if (widget.onSubmitted != null) {
               widget.onSubmitted();
               SystemChannels.textInput.invokeMethod('TextInput.hide');

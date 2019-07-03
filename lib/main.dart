@@ -18,10 +18,17 @@ Future autoLogin() async {
 }
 
 class MyApp extends StatelessWidget {
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Saji Apps',
+      onGenerateRoute: (route) {
+        print(route);
+      },
+      navigatorKey: key,
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),

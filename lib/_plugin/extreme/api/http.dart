@@ -8,39 +8,84 @@ var cachedEndpoint = [
 ];
 
 class ExtremeHttp {
-  Future<dynamic> get(String url) async {
+  int maxRetryCount = 3;
+
+  ExtremeHttp() {
+    // dio.options.connectTimeout = 1000;
+    // dio.options.sendTimeout = 1000;
+    // dio.options.receiveTimeout = 1000;
+  }
+
+  Future<dynamic> get(
+    String url, {
+    bool isCached = false,
+  }) async {
+    bool requestDone = false;
+    int requestCount = 0;
+    var returnedResponse;
 
     /*
     TODO: Check if endpoint need update or not, if not just return sqlite Value
     TODO: Use Model and Cached it on Sqlite at Client Side, and New Database Called EndpointStatus to Save All Endpoint Version
     TODO: if Cached Endpoint Version is Different From Endpoint Status, set CachedModel needUpdate field to true
-    TODO: if not, just return value from sqlite
-    TODO: if no endpoint found on the model, do normal http Request and Response
+    TODO: if not, just return value from sqlite                                            
     */
 
-    print("Request: " + url);
-
-    try {
-      // dio.options.sendTimeout = 100;
-      // dio.options.receiveTimeout = 100;
-
-      var response = await dio.get(url);
-
-      handleUserDefinedError(response.data);
-
-      return Future.value(response.data);
-    } catch (error) {
-      handleDioError(error);
-      return Future.value("ERROR");
+    while (requestDone == false) {
+      print("GET: " + url);
+      try {
+        var response = await dio.get(url);
+        handleUserDefinedError(response.data);
+        requestDone = true;
+        returnedResponse = response.data;
+      } catch (error) {
+        requestCount++;
+        if (requestCount <= maxRetryCount) {
+          print("Retry Connection To: $url   $requestCount/$maxRetryCount");
+        } else {
+          handleDioError(error);
+          requestDone = true;
+          returnedResponse = null;
+        }
+      }
     }
+
+    return Future.value(returnedResponse);
+  }
+
+  Future<dynamic> post(String url, dynamic postData) async {
+    bool requestDone = false;
+    int requestCount = 0;
+    var returnedResponse;
+
+    while (requestDone == false) {
+      print("POST: " + url);
+      try {
+        var response = await dio.post(url, data: postData);
+        handleUserDefinedError(response.data);
+        requestDone = true;
+        returnedResponse = response.data;
+      } catch (error) {
+        requestCount++;
+        if (requestCount <= maxRetryCount) {
+          print("Retry Connection To: $url   $requestCount/$maxRetryCount");
+        } else {
+          handleDioError(error);
+          requestDone = true;
+          returnedResponse = null;
+        }
+      }
+    }
+
+    return Future.value(returnedResponse);
   }
 
   handleUserDefinedError(responseData) {
-    print(":: UserDefined Error ::");
     if (responseData["error"] == true) {
       switch (responseData["error_code"]) {
         case "BRANCHED_ENDPOINT":
           print(responseData["message"]);
+          print(responseData);
           break;
         default:
           print("Undefined UserDefined Error");
@@ -74,6 +119,10 @@ class ExtremeHttp {
         case DioErrorType.RESPONSE:
           errorDescription =
               "Received invalid status code: ${error.response.statusCode}";
+          break;
+        default:
+          errorDescription = "### UNDEFINED ERROR ###";
+          errorDescription += error;
           break;
       }
       print(errorDescription);

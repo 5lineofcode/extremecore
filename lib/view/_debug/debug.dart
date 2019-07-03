@@ -15,6 +15,11 @@ class DebugPage extends StatefulWidget {
 
 class _DebugPageState extends State<DebugPage> {
   @override
+  void initState() {
+    super.initState();
+    Session.host = "http://192.168.6.234/sajiweb";
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -97,7 +102,6 @@ class _DebugPageState extends State<DebugPage> {
                     "stock": 150,
                   },
                 ];
-
                 await LocalStorage.save("product", json.encode(items));
                 print("Data Saved!");
               },
@@ -106,10 +110,18 @@ class _DebugPageState extends State<DebugPage> {
               label: "Load List",
               onPressed: () async {
                 var items = await LocalStorage.load("product");
-
                 List decodedItems = json.decode(items);
                 print(decodedItems);
                 print(decodedItems.length);
+
+
+                var products = decodedItems;
+
+                var prod = products.where((product)=>product["product_id"] == 1003);
+                print("Your Selected Item");
+                print(prod);
+
+
               },
             ),
             IButton(
@@ -119,9 +131,10 @@ class _DebugPageState extends State<DebugPage> {
             IButton(
               label: "Checklist Example",
               onPressed: () {
-                Page.show(context,ChecklistExamplePage());
+                Page.show(context, ChecklistExamplePage());
               },
             ),
+            Text("Connected to ${Session.host}"),
           ],
         ),
       ),
