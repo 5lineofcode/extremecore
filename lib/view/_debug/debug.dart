@@ -17,7 +17,6 @@ class _DebugPageState extends State<DebugPage> {
   @override
   void initState() {
     super.initState();
-    Session.host = "http://192.168.6.234/sajiweb";
   }
 
   @override

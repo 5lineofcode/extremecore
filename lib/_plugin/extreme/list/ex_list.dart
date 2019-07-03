@@ -120,7 +120,7 @@ class EX extends State<ExList> {
     print("Loading Data from $url");
 
     var response = await http.get(url);
-    var obj = response.data;
+    var obj = response;
 
     print(obj);
     setState(() {
@@ -220,39 +220,72 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     );
   }
 
+  onItemTap(item) {
+    if (widget.onItemSelected != null) {
+      widget.onItemSelected(item);
+      // Navigator.of(context).pop();
+      return;
+    }
+
+    if (widget.onTap != null) {
+      widget.onTap();
+      return;
+    }
+
+    if (widget.formPageTemplate != null) {
+      Input.set("selectedId", item[widget.apiDefinition.primaryKey]);
+      Page.show(context, widget.formPageTemplate).then((hook) {
+        loadData();
+        setState(() {
+          items = [];
+        });
+      });
+    } else {
+      SweetAlert.show(
+        context,
+        title: "Please add Property FormPageTemplate to ExList declaration!",
+      );
+    }
+  }
+
   getDefaultItemTemplate(context, item, index) {
     if (widget.itemBuilder != null) {
       return widget.itemBuilder(context, item, index);
     }
 
-    return Card(
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: apiDefinition.leadingPhotoIndex != null
-                ? Container(
-                    width: 60.0,
-                    height: 60.0,
-                    child: FadeInImage(
-                      placeholder:
-                          AssetImage("assets/gif/saji_logo_only_black.gif"),
-                      image: item[apiDefinition.leadingPhotoIndex] != null
-                          ? NetworkImage(
-                              "${Session.publicUrl}/${item[apiDefinition.leadingPhotoIndex]}")
-                          : AssetImage("assets/images/no_pict.png"),
-                    ),
-                  )
-                : null,
-            title: apiDefinition.titleIndex != null
-                ? Text(item[apiDefinition.titleIndex].toString())
-                : null,
-            subtitle: apiDefinition.subtitleIndex != null
-                ? Text(item[apiDefinition.subtitleIndex].toString())
-                : null,
-          ),
-        ],
+    return InkWell(
+      onTap: () {
+        onItemTap(item);
+      },
+      child: Card(
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              leading: apiDefinition.leadingPhotoIndex != null
+                  ? Container(
+                      width: 60.0,
+                      height: 60.0,
+                      child: FadeInImage(
+                        placeholder:
+                            AssetImage("assets/gif/saji_logo_only_black.gif"),
+                        image: item[apiDefinition.leadingPhotoIndex] != null
+                            ? NetworkImage(
+                                "${Session.publicUrl}/${item[apiDefinition.leadingPhotoIndex]}")
+                            : AssetImage("assets/images/no_pict.png"),
+                      ),
+                    )
+                  : null,
+              title: apiDefinition.titleIndex != null
+                  ? Text(item[apiDefinition.titleIndex].toString())
+                  : null,
+              subtitle: apiDefinition.subtitleIndex != null
+                  ? Text(item[apiDefinition.subtitleIndex].toString())
+                  : null,
+            ),
+          ],
+        ),
+        semanticContainer: true,
       ),
-      semanticContainer: true,
     );
   }
 
@@ -360,39 +393,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                       },
                       onDismissed: (direction) {},
                       background: Container(color: Colors.red),
-                      child: InkWell(
-                        onTap: () {
-                          if (widget.onItemSelected != null) {
-                            widget.onItemSelected(item);
-                            // Navigator.of(context).pop();
-                            return;
-                          }
-
-                          if (widget.onTap != null) {
-                            widget.onTap();
-                            return;
-                          }
-
-                          if (widget.formPageTemplate != null) {
-                            Input.set("selectedId",
-                                item[widget.apiDefinition.primaryKey]);
-                            Page.show(context, widget.formPageTemplate)
-                                .then((hook) {
-                              loadData();
-                              setState(() {
-                                items = [];
-                              });
-                            });
-                          } else {
-                            SweetAlert.show(
-                              context,
-                              title:
-                                  "Please add Property FormPageTemplate to ExList declaration!",
-                            );
-                          }
-                        },
-                        child: getDefaultItemTemplate(context, item, index),
-                      ),
+                      child: getDefaultItemTemplate(context, item, index),
                     );
                   },
                 ),
