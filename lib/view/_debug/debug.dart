@@ -19,6 +19,7 @@ class _DebugPageState extends State<DebugPage> {
     super.initState();
     Session.host = "http://192.168.6.234/sajiweb";
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,14 +115,12 @@ class _DebugPageState extends State<DebugPage> {
                 print(decodedItems);
                 print(decodedItems.length);
 
-
                 var products = decodedItems;
 
-                var prod = products.where((product)=>product["product_id"] == 1003);
+                var prod =
+                    products.where((product) => product["product_id"] == 1003);
                 print("Your Selected Item");
                 print(prod);
-
-
               },
             ),
             IButton(
