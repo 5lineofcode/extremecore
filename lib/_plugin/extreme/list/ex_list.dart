@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:extremecore/core.dart';
 
@@ -273,6 +274,14 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                                 "${Session.publicUrl}/${item[apiDefinition.leadingPhotoIndex]}")
                             : AssetImage("assets/images/no_pict.png"),
                       ),
+                      // child: CachedNetworkImage(
+                      //   imageUrl:
+                      //       "${Session.publicUrl}/aaaaaaaaaaaaaaaaa${item[apiDefinition.leadingPhotoIndex]}",
+                      //   placeholder: (context, url) => Image.asset(
+                      //       "assets/images/saji_logo_only_black.gif"),
+                      //   errorWidget: (context, url, error) =>
+                      //       Image.asset("assets/images/no_pict.png"),
+                      // ),
                     )
                   : null,
               title: apiDefinition.titleIndex != null
