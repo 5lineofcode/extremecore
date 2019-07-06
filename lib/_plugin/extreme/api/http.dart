@@ -38,6 +38,10 @@ class ExtremeHttp {
         handleUserDefinedError(response.data);
         requestDone = true;
         returnedResponse = response.data;
+
+        print("GetResponse: ");
+        print(returnedResponse);
+        print("~~~~~~~~~~~~~~");
       } catch (error) {
         // String prodHost = "http://192.168.6.234/sajiweb";
         // String devHost = "http://192.168.43.82/sajiweb";
@@ -73,7 +77,7 @@ class ExtremeHttp {
       print("PostData: ");
       print(postData);
       print("################");
-      
+
       try {
         var response = await dio.post(url, data: postData);
         handleUserDefinedError(response.data);
@@ -115,6 +119,7 @@ class ExtremeHttp {
 
   handleDioError(error) {
     print(":: Dio Error ::");
+    print(error);
     if (error is DioError) {
       var errorDescription;
       switch (error.type) {
