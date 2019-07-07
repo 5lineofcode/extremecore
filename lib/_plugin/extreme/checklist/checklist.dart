@@ -70,7 +70,7 @@ class _CheckListState extends State<CheckList> {
   }
 
   @override
-  void initState() {
+  void initState() {  
     super.initState();
     Input.set(widget.id, []);
     apiDefinition = widget.apiDefinition;

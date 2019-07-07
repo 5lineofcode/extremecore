@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:extremecore/core.dart';
 
@@ -31,5 +30,20 @@ class Input {
     } else {
       return null;
     }
+  }
+
+  static generateFormData() {
+    Input.controllerList.forEach((key, textEditingController) {
+      if (key.indexOf("email") > -1) {
+        textEditingController.text =
+            "saji." + Random().nextInt(100000).toString() + "@mailinator.com";
+      } else if (key.indexOf("name") > -1) {
+        textEditingController.text = "Mr. John";
+      } else if (key.indexOf("mobile") > -1 || key.indexOf("phone") > -1) {
+        textEditingController.text = "+62" + min(10000000, 90000000).toString();
+      } else {
+        textEditingController.text = min(10000000, 90000000).toString();
+      }
+    });
   }
 }

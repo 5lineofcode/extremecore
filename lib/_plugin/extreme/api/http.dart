@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:extremecore/core.dart';
+import 'package:flutter/material.dart';
 
 var cachedEndpoint = [
   "product",
@@ -8,10 +9,25 @@ var cachedEndpoint = [
 ];
 
 class ExtremeHttp {
+  //Event
+  static dynamic onBranchedEndpoint;
+  static dynamic onUndefinedError;
+
+  static dynamic onConnectTimeout;
+  static dynamic onSendTimeout;
+  static dynamic onReceiveTimeout;
+  static dynamic onInternetConnectionProblem;
+
+  BuildContext httpContext;
+  String httpUrl;
+  String httpMethod;
+  String httpPostData;
+  String httpResponse;
+
   int maxRetryCount = 3;
 
   ExtremeHttp() {
-    dio.options.connectTimeout = 5000;
+    // dio.options.connectTimeout = 5000;
     // dio.options.sendTimeout = 1000;
     // dio.options.receiveTimeout = 1000;
   }
@@ -23,6 +39,8 @@ class ExtremeHttp {
     bool requestDone = false;
     int requestCount = 0;
     var returnedResponse;
+
+    dio.clear();
 
     /*
     TODO: Check if endpoint need update or not, if not just return sqlite Value
@@ -42,6 +60,11 @@ class ExtremeHttp {
         print("GetResponse: ");
         print(returnedResponse);
         print("~~~~~~~~~~~~~~");
+
+        httpUrl = url;
+        httpMethod = "GET";
+        httpPostData = "";
+        httpResponse = returnedResponse;
       } catch (error) {
         // String prodHost = "http://192.168.6.234/sajiweb";
         // String devHost = "http://192.168.43.82/sajiweb";
@@ -66,11 +89,6 @@ class ExtremeHttp {
     int requestCount = 0;
     var returnedResponse;
 
-    // if(isMirrorServer){
-    //   Alert.show(context, message: "Can't Post New Data on Mirror Server");
-    //   return;
-    // }
-
     while (requestDone == false) {
       print("----------------");
       print("POST: " + url);
@@ -87,6 +105,11 @@ class ExtremeHttp {
         print("PostResponse: ");
         print(returnedResponse);
         print("~~~~~~~~~~~~~~");
+
+        httpUrl = url;
+        httpMethod = "POST";
+        httpPostData = postData;
+        httpResponse = returnedResponse;
       } catch (error) {
         requestCount++;
         if (requestCount <= maxRetryCount) {
@@ -106,10 +129,16 @@ class ExtremeHttp {
     if (responseData["error"] == true) {
       switch (responseData["error_code"]) {
         case "BRANCHED_ENDPOINT":
+          if (ExtremeHttp.onBranchedEndpoint != null) {
+            ExtremeHttp.onBranchedEndpoint();
+          }
           print(responseData["message"]);
           print(responseData);
           break;
         default:
+          if (ExtremeHttp.onUndefinedError != null) {
+            ExtremeHttp.onUndefinedError();
+          }
           print("Undefined UserDefined Error");
           print(responseData);
           break;
@@ -128,16 +157,28 @@ class ExtremeHttp {
           break;
         case DioErrorType.CONNECT_TIMEOUT:
           errorDescription = "Connection timeout with API server";
+          if (ExtremeHttp.onConnectTimeout != null) {
+            ExtremeHttp.onConnectTimeout();
+          }
           break;
         case DioErrorType.DEFAULT:
           errorDescription =
               "Connection to API server failed due to internet connection";
+          if (ExtremeHttp.onInternetConnectionProblem != null) {
+            ExtremeHttp.onInternetConnectionProblem();
+          }
           break;
         case DioErrorType.RECEIVE_TIMEOUT:
           errorDescription = "Receive timeout in connection with API server";
+          if (ExtremeHttp.onReceiveTimeout != null) {
+            ExtremeHttp.onReceiveTimeout();
+          }
           break;
         case DioErrorType.SEND_TIMEOUT:
           errorDescription = "Send timeout in connection with API server";
+          if (ExtremeHttp.onSendTimeout != null) {
+            ExtremeHttp.onSendTimeout();
+          }
           break;
         case DioErrorType.RESPONSE:
           errorDescription =
