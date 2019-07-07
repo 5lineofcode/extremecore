@@ -1,3 +1,4 @@
+import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter/material.dart';
 
@@ -10,8 +11,12 @@ class Session {
   static String email;
   static String password;
   static String mobile;
+  static String appName = "";
 
   static bool isLogin = false;
+  static BluetoothDevice device;
+  static bool connected = false;
+  static bool pressed = false;
 
   //? Colors
   static Color themeColor = Color(0xffA40C33);
