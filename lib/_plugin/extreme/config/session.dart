@@ -11,6 +11,7 @@ class Session {
   static String email;
   static String password;
   static String mobile;
+  static String appName = "";
 
   static bool isLogin = false;
   static BluetoothDevice device;
