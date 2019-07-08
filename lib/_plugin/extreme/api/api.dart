@@ -32,7 +32,7 @@ class Api {
   Future<PostResponse> create(postData) async {
     var url = "${Session.host}/public/api/create/${this.endpoint}";
     var response = await http.post(url, postData);
-    return Future.value(PostResponse.fromJson(response.data));
+    return Future.value(PostResponse.fromJson(response));
   }
 
   Future<PostResponse> update(postData) async {

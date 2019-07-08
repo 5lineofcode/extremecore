@@ -38,6 +38,7 @@ class ExButton extends StatelessWidget {
         label: Text(
           label != null ? label : "",
           style: TextStyle(color: Colors.white, fontSize: 10.0),
+          overflow: TextOverflow.ellipsis,
         ), //`Text` to display
         onPressed: () {
           if (onPressed != null) {
