@@ -50,6 +50,7 @@ class EX extends State<ExList> {
 
   static reload() {
     EX.instance.setState(() {});
+    EX.instance.loadData();
   }
 
   @override
@@ -72,17 +73,25 @@ class EX extends State<ExList> {
     var whereQuery = "";
     if (apiDefinition.where != null) {
       apiDefinition.where.forEach((key, value) {
-        whereQuery = "f_$key=$value";
+        whereQuery += "f_$key=$value&";
       });
       whereQuery = whereQuery.length == 0 ? "" : "?$whereQuery";
     }
+
+    print("WhereQuery");
+    print(whereQuery);
 
     var sortQuery = "";
     if (apiDefinition.sortField != null) {
       if (whereQuery.length == 0) {
         sortQuery = "?";
       } else {
-        sortQuery = "&";
+        if(whereQuery.length>1){
+          sortQuery = "";
+        }
+        else {
+          sortQuery = "&";
+        }
       }
       sortQuery +=
           "sort_field=${apiDefinition.sortField}&sort_order=${apiDefinition.sortOrder}";
@@ -301,6 +310,13 @@ use _refreshController.loadComplete() or loadNoData() to end loading
 
   @override
   Widget build(BuildContext context) {
+    if (items.length == 0) {
+      return Scaffold(
+        body: Center(
+          child: Text("No Data"),
+        ),
+      );
+    }
     return Scaffold(
       appBar: widget.noAppBar
           ? null
