@@ -7,7 +7,7 @@ class Page {
       MaterialPageRoute(
         builder: (BuildContext context) => newPage,
       ),
-    );    
+    );
 
     return Future.value(true);
   }
@@ -19,5 +19,14 @@ class Page {
         builder: (BuildContext context) => newPage,
       ),
     );
+  }
+
+  static clearAndPush(BuildContext context, newPage) {
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => newPage,
+        ),
+        (route) => false);
   }
 }

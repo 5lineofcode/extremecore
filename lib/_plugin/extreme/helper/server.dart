@@ -135,6 +135,25 @@ class Alert {
     return;
   }
 
+  static showSuccessAndPop({
+    BuildContext context,
+    String title,
+    String message,
+    dynamic onOk,
+    dynamic onCancel,
+  }) {
+    SweetAlert.show(
+      context,
+      title: title,
+      subtitle: message,
+      style: SweetAlertStyle.success,
+      onPress: (isConfirmed) {
+        Navigator.of(context).pop();
+      },
+    );
+    return;
+  }
+
   // static showError(context, title, message, onConfirmed, onUnconfirmed) {
 
   static showError({

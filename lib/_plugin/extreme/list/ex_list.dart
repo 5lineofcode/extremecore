@@ -86,10 +86,9 @@ class EX extends State<ExList> {
       if (whereQuery.length == 0) {
         sortQuery = "?";
       } else {
-        if(whereQuery.length>1){
+        if (whereQuery.length > 1) {
           sortQuery = "";
-        }
-        else {
+        } else {
           sortQuery = "&";
         }
       }
@@ -322,6 +321,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
           ? null
           : Session.appName == "Saji"
               ? Saji.getAppBar(
+                  context: context,
                   title: widget.title,
                   hasBottom: false,
                   actions: widget.noActionsButton == true

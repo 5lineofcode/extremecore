@@ -41,6 +41,7 @@ class _ExSearchFieldState extends State<ExSearchField> {
     if (widget.apiDefinition != null) {
       return ExList(
         title: widget.label,
+        noDelete: true,
         onItemSelected: (item) {
           print("You Select ");
           print(item);
