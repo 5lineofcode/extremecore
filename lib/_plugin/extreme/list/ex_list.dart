@@ -86,10 +86,9 @@ class EX extends State<ExList> {
       if (whereQuery.length == 0) {
         sortQuery = "?";
       } else {
-        if(whereQuery.length>1){
+        if (whereQuery.length > 1) {
           sortQuery = "";
-        }
-        else {
+        } else {
           sortQuery = "&";
         }
       }
@@ -308,58 +307,125 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     );
   }
 
+  getAppBar() {
+    return widget.noAppBar
+        ? null
+        : Session.appName == "Saji"
+            ? Saji.getAppBar(
+                title: widget.title,
+                hasBottom: false,
+                actions: widget.noActionsButton == true
+                    ? []
+                    : [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              _showSortOptions(context);
+                            },
+                            child: Icon(Icons.sort),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.search),
+                        )
+                      ])
+            : AppBar(
+                title: Text(widget.title),
+                actions: widget.noActionsButton == true
+                    ? []
+                    : [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              _showSortOptions(context);
+                            },
+                            child: Icon(Icons.sort),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.search),
+                        )
+                      ]);
+  }
+
+  getMainContent() {
+    if (isLoading) {
+      return Center(child: Text("Loading"));
+    }
+
+    if (items.length == 0) {
+      return Center(child: Text("No Data"));
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: WaterDropHeader(
+          complete: Wrap(
+            children: [
+              Icon(
+                Icons.check_box,
+                color: Colors.green,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: Text(
+                  "Success",
+                  style: TextStyle(color: Colors.green),
+                ),
+              ),
+            ],
+          ),
+        ),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            var item = items[index];
+
+            if (widget.noDelete) {
+              return getDefaultItemTemplate(context, item, index);
+            }
+
+            return Dismissible(
+              key: Key(item[apiDefinition.primaryKey].toString()),
+              confirmDismiss: (DismissDirection dismissDirection) {
+                confirmDismiss(context, 'delete').then((bool value) {
+                  if (value) {
+                    SweetAlert.show(context,
+                        style: SweetAlertStyle.success,
+                        title: "Success delete data");
+                    setState(
+                      () {
+                        _deleteData(item);
+                        items.removeAt(index);
+                      },
+                    );
+                  }
+                });
+              },
+              onDismissed: (direction) {},
+              background: Container(color: Colors.red),
+              child: getDefaultItemTemplate(context, item, index),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (items.length == 0) {
-      return Scaffold(
-        body: Center(
-          child: Text("No Data"),
-        ),
-      );
-    }
     return Scaffold(
-      appBar: widget.noAppBar
-          ? null
-          : Session.appName == "Saji"
-              ? Saji.getAppBar(
-                  title: widget.title,
-                  hasBottom: false,
-                  actions: widget.noActionsButton == true
-                      ? []
-                      : [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                _showSortOptions(context);
-                              },
-                              child: Icon(Icons.sort),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(Icons.search),
-                          )
-                        ])
-              : AppBar(
-                  title: Text(widget.title),
-                  actions: widget.noActionsButton == true
-                      ? []
-                      : [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                _showSortOptions(context);
-                              },
-                              child: Icon(Icons.sort),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(Icons.search),
-                          )
-                        ]),
+      appBar: getAppBar(),
       floatingActionButton: widget.noFloatingActionButton == true
           ? Container()
           : FloatingActionButton(
@@ -385,67 +451,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               child: Icon(FontAwesomeIcons.plus),
               backgroundColor: Colors.grey[800],
             ),
-      body: isLoading
-          ? Center(child: Text("Loading"))
-          : Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SmartRefresher(
-                enablePullDown: true,
-                enablePullUp: true,
-                header: WaterDropHeader(
-                  complete: Wrap(
-                    children: [
-                      Icon(
-                        Icons.check_box,
-                        color: Colors.green,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Text(
-                          "Success",
-                          style: TextStyle(color: Colors.green),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                controller: _refreshController,
-                onRefresh: _onRefresh,
-                onLoading: _onLoading,
-                child: ListView.builder(
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    var item = items[index];
-
-                    if (widget.noDelete) {
-                      return getDefaultItemTemplate(context, item, index);
-                    }
-
-                    return Dismissible(
-                      key: Key(item[apiDefinition.primaryKey].toString()),
-                      confirmDismiss: (DismissDirection dismissDirection) {
-                        confirmDismiss(context, 'delete').then((bool value) {
-                          if (value) {
-                            SweetAlert.show(context,
-                                style: SweetAlertStyle.success,
-                                title: "Success delete data");
-                            setState(
-                              () {
-                                _deleteData(item);
-                                items.removeAt(index);
-                              },
-                            );
-                          }
-                        });
-                      },
-                      onDismissed: (direction) {},
-                      background: Container(color: Colors.red),
-                      child: getDefaultItemTemplate(context, item, index),
-                    );
-                  },
-                ),
-              ),
-            ),
+      body: getMainContent(),
     );
   }
 }
