@@ -15,6 +15,7 @@ class ExList extends StatefulWidget {
   final bool noActionsButton;
   final bool noAppBar;
   final bool noDelete;
+  final bool noContext;
 
   final formPageTemplate;
   final editPageTemplate;
@@ -30,6 +31,7 @@ class ExList extends StatefulWidget {
     this.noActionsButton = false,
     this.noAppBar = false,
     this.noDelete = false,
+    this.noContext = false,
     this.formPageTemplate,
     this.editPageTemplate,
     this.itemBuilder,
@@ -233,7 +235,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
   onItemTap(item) {
     if (widget.onItemSelected != null) {
       widget.onItemSelected(item);
-      // Navigator.of(context).pop();
+      Navigator.of(context).pop();
       return;
     }
 
@@ -312,6 +314,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
         ? null
         : Session.appName == "Saji"
             ? Saji.getAppBar(
+                context: widget.noContext ? null : context,
                 title: widget.title,
                 hasBottom: false,
                 actions: widget.noActionsButton == true
