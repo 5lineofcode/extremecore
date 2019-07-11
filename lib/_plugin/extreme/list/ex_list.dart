@@ -261,6 +261,9 @@ use _refreshController.loadComplete() or loadNoData() to end loading
   }
 
   getDefaultItemTemplate(context, item, index) {
+    print("Load Data Ex_list");
+    print("${Session.storageUrl}/${item[apiDefinition.leadingPhotoIndex]}");
+    
     if (widget.itemBuilder != null) {
       return widget.itemBuilder(context, item, index);
     }
@@ -282,7 +285,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                             AssetImage("assets/gif/saji_logo_only_black.gif"),
                         image: item[apiDefinition.leadingPhotoIndex] != null
                             ? NetworkImage(
-                                "${Session.publicUrl}/${item[apiDefinition.leadingPhotoIndex]}")
+                                "${Session.storageUrl}/${item[apiDefinition.leadingPhotoIndex]}")
                             : AssetImage("assets/images/no_pict.png"),
                       ),
                       // child: CachedNetworkImage(

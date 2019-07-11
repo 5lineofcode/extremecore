@@ -44,12 +44,18 @@ class Session {
   static String baseUrl = "$host/public/admin";
   static String apiUrl = "$host/public/api";
   static String publicUrl = "$host/public";
+  static String storageUrl = "$host/storage/app";
 
   static String appVersion = "";
   static String lastBuildTime = "";
 
   static String getAssetUrl(String imageUrl) {
-    return "$host/public/" + imageUrl;
+    // print("getAssetUrl");
+    // print("$host/public/" + imageUrl);
+    // return "$host/public/" + imageUrl;
+    print("getAssetUrl");
+    print("$storageUrl/" + imageUrl);
+    return "$storageUrl/" + imageUrl;
   }
 
   static String getUrl({
