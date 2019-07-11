@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:extremecore/view/partial/saji_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:extremecore/core.dart';
