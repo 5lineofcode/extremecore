@@ -125,11 +125,6 @@ class ExImageUploadState extends State<ExImageUpload> {
       print(Session.getAssetUrl(imageUrl));
     }
 
-    if (imageUrl != "") {
-      print("Loading Image From:");
-      print(Session.getAssetUrl(imageUrl));
-    }
-
     return Row(
       children: <Widget>[
         InkWell(
