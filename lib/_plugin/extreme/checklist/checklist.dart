@@ -18,11 +18,13 @@ class CheckList extends StatefulWidget {
   final String label;
   final ApiDefinition apiDefinition;
   final double height;
+  final dynamic checkedItems;
   CheckList({
     @required this.id,
     @required this.label,
     @required this.apiDefinition,
     this.height = 400.0,
+    this.checkedItems,
   });
 
   @override
@@ -34,7 +36,7 @@ class _CheckListState extends State<CheckList> {
 
   var items = [];
 
-  loadData() async {
+  loadData(checkedItems) async {
     List<ParameterValue> params = [];
     params.add(ParameterValue(
       key: "page_count",
@@ -52,8 +54,23 @@ class _CheckListState extends State<CheckList> {
       setState(() {
         items = obj["data"];
 
+        print("checklist ~~~~~~~~~~~~~~~~~~~~ items");
+        print(items);
+        print("checklist ~~~~~~~~~~~~~~~~~~~~ checkedItems");
+        print(checkedItems);
         for (var item in items) {
-          item["checked"] = false;
+          if (checkedItems == null) {
+            item["checked"] = false;
+          } else {
+            for (var checked in checkedItems) {
+              if (checked["station_id"] == item["id"]) {
+                item["checked"] = true;
+                break;
+              } else {
+                item["checked"] = false;
+              }
+            }
+          }
         }
       });
     }
@@ -70,11 +87,11 @@ class _CheckListState extends State<CheckList> {
   }
 
   @override
-  void initState() {  
+  void initState() {
     super.initState();
     Input.set(widget.id, []);
     apiDefinition = widget.apiDefinition;
-    loadData();
+    loadData(widget.checkedItems);
   }
 
   @override
@@ -158,6 +175,8 @@ class _CheckListState extends State<CheckList> {
         onTap: () {
           setState(() {
             item["checked"] = item["checked"] == true ? false : true;
+            print("checklist ~~~~~~~~~~~~~~~ item checked");
+            print(item["checked"]);
             saveInputtedData();
           });
         },

@@ -32,3 +32,5 @@ export './_plugin/extreme/textfield/ex_text_field.dart';
 export './_plugin/extreme/textfield/ex_text_field_with_popup.dart';
 export './_plugin/extreme/button/form_save_button.dart';
 export './app.dart';
+
+export 'package:provider/provider.dart';

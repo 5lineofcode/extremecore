@@ -55,7 +55,7 @@ class _ExImageState extends State<ExImage> {
               shape: widget.shape,
               image: DecorationImage(
                 fit: widget.fit,
-                image: NetworkImage("${Session.publicUrl}/$urlPhoto"),
+                image: NetworkImage("${Session.storageUrl}/$urlPhoto"),
               ),
             ),
           );
