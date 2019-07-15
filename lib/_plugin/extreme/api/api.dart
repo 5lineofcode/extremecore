@@ -38,10 +38,8 @@ class Api {
   Future<PostResponse> update(postData) async {
     //!Update Data API
     var url = "${Session.host}/public/api/update/${this.endpoint}";
-    print("api ~~~~~~~~~~~~~~~~~~~~~~~~~ url");
-    print(url);
     var response = await http.post(url, postData);
-    return Future.value(PostResponse.fromJson(response));
+    return Future.value(PostResponse.fromJson(response.data));
   }
 
   Future<Response> delete(id) async {
