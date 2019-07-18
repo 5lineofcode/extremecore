@@ -131,7 +131,7 @@ class Alert {
       subtitle: message,
       style: SweetAlertStyle.success,
       onPress: (isConfirmed) {
-        return;
+        return true;
       },
     );
     return;
@@ -151,7 +151,7 @@ class Alert {
       style: SweetAlertStyle.success,
       onPress: (isConfirmed) {
         Navigator.of(context).pop();
-        return;
+        return true;
       },
     );
     return;
@@ -181,7 +181,7 @@ class Alert {
             onCancel();
           }
         }
-        return;
+        return true;
       },
     );
   }

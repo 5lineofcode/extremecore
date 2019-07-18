@@ -25,10 +25,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Saji Apps',
-      onGenerateRoute: (route) {
-        print(route);
-        return;
-      },
       navigatorKey: key,
       theme: ThemeData(
         primarySwatch: Colors.red,

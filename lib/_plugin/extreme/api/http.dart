@@ -103,8 +103,7 @@ class ExtremeHttp {
         httpMethod = "POST";
         httpPostData = postData;
         httpResponse = returnedResponse;
-      } catch (error) { 
-
+      } catch (error) {
         requestCount++;
         if (requestCount <= maxRetryCount) {
           print("Retry Connection To: $url $requestCount/$maxRetryCount");
