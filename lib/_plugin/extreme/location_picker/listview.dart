@@ -228,6 +228,7 @@ class GooglePlaceAutoCompleteSearchWidgetListViewState
     return WillPopScope(
       onWillPop: () {
         confirmDelete();
+        return;
       },
       child: scaffold,
     );

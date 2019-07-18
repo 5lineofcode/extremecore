@@ -42,13 +42,6 @@ class ExtremeHttp {
 
     dio.clear();
 
-    /*
-    TODO: Check if endpoint need update or not, if not just return sqlite Value
-    TODO: Use Model and Cached it on Sqlite at Client Side, and New Database Called EndpointStatus to Save All Endpoint Version
-    TODO: if Cached Endpoint Version is Different From Endpoint Status, set CachedModel needUpdate field to true
-    TODO: if not, just return value from sqlite                                            
-    */
-
     while (requestDone == false) {
       print("GET: " + url);
       try {

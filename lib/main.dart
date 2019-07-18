@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extremecore/view/_debug/debug.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'Saji Apps',
       onGenerateRoute: (route) {
         print(route);
+        return;
       },
       navigatorKey: key,
       theme: ThemeData(

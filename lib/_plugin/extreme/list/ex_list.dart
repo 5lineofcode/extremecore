@@ -416,6 +416,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                     );
                   }
                 });
+                return;
               },
               onDismissed: (direction) {},
               background: Container(color: Colors.red),
