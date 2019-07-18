@@ -130,7 +130,9 @@ class Alert {
       title: title,
       subtitle: message,
       style: SweetAlertStyle.success,
-      onPress: (isConfirmed) {},
+      onPress: (isConfirmed) {
+        return true;
+      },
     );
     return;
   }
@@ -149,6 +151,7 @@ class Alert {
       style: SweetAlertStyle.success,
       onPress: (isConfirmed) {
         Navigator.of(context).pop();
+        return true;
       },
     );
     return;
@@ -178,6 +181,7 @@ class Alert {
             onCancel();
           }
         }
+        return true;
       },
     );
   }
