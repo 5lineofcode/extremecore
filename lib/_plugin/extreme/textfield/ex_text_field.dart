@@ -100,24 +100,25 @@ class _ExTextFieldState extends State<ExTextField> {
     });
 
     //FocusNode
-    focusNode.addListener(() {
-      if (focusNode.hasFocus) {
-        if (this.mounted) {
-          setState(() {
-            showSuffix = true;
-          });
-          if (widget.onFocus != null) {
-            widget.onFocus();
-          }
-        }
-      } else {
-        if (this.mounted) {
-          setState(() {
-            showSuffix = false;
-          });
-        }
-      }
-    });
+    //TODO:: DK : Gw remove dulu biar fokus ga ke kiri terus 
+    // focusNode.addListener(() {
+    //   if (focusNode.hasFocus) {
+    //     if (this.mounted) {
+    //       setState(() {
+    //         showSuffix = true;
+    //       });
+    //       if (widget.onFocus != null) {
+    //         widget.onFocus();
+    //       }
+    //     }
+    //   } else {
+    //     if (this.mounted) {
+    //       setState(() {
+    //         showSuffix = false;
+    //       });
+    //     }
+    //   }
+    // });
 
     super.initState();
   }
