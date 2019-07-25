@@ -13,6 +13,7 @@ class Saji {
     String tabBar2 = "",
     String tabBar3 = "",
     String tabBar4 = "",
+    dynamic onBack,
   }) {
     getTitle() {
       return Container(
@@ -27,6 +28,10 @@ class Saji {
           children: <Widget>[
             InkWell(
               onTap: () {
+                if(onBack!=null){
+                  onBack();
+                  return;
+                }
                 Navigator.of(context).pop();
               },
               child: context != null
