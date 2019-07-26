@@ -336,8 +336,10 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                           child: Icon(Icons.search),
                         )
                       ])
-            : AppBar(
-                title: Text(widget.title),
+            : Saji.getAppBar(
+                context: widget.noContext ? null : context,
+                title: widget.title,
+                hasBottom: false,
                 actions: widget.noActionsButton == true
                     ? []
                     : [
