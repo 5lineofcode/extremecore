@@ -24,6 +24,13 @@ class Input {
     return formatter.format(number);
   }
 
+  static bool isNumeric(String s) {
+    if (s == null) {
+      return false;
+    }
+    return double.parse(s, (e) => null) != null;
+  }
+
   static getValueOnEdit(key, isEdit) {
     if (isEdit) {
       return Input.get(key).toString();

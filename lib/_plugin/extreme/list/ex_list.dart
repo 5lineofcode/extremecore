@@ -4,6 +4,10 @@ import 'package:extremecore/core.dart';
 
 class ExList extends StatefulWidget {
   final String title;
+  final String beforeTitle;
+  final String afterTitle;
+  final String beforeSubtitle;
+  final String afterSubtitle;
   final ApiDefinition apiDefinition;
 
   final dynamic onTap;
@@ -23,6 +27,10 @@ class ExList extends StatefulWidget {
 
   ExList({
     this.title = "",
+    this.beforeTitle = "",
+    this.afterTitle = "",
+    this.beforeSubtitle = "",
+    this.afterSubtitle = "",
     @required this.apiDefinition,
     this.onTap,
     this.onItemSelected,
@@ -48,6 +56,8 @@ class EX extends State<ExList> {
   static List items = [];
   String nextPageUrl;
   String prevUrl;
+  String title;
+  String subtitle;
 
   static reload() {
     EX.instance.setState(() {});
@@ -260,9 +270,26 @@ use _refreshController.loadComplete() or loadNoData() to end loading
   }
 
   getDefaultItemTemplate(context, item, index) {
-    print("Load Data Ex_list");
-    print("${Session.storageUrl}/${item[apiDefinition.leadingPhotoIndex]}");
-    
+    print(item[apiDefinition.titleIndex]);
+
+    if (apiDefinition.titleIndex != null) {
+      title = item[apiDefinition.titleIndex].toString();
+      if (Input.isNumeric(title)) {
+        title = Input.setThousandSeparator(
+            item[apiDefinition.titleIndex].toString());
+      }
+      title = widget.beforeTitle + title + widget.afterTitle;
+    }
+
+    if (apiDefinition.subtitleIndex != null) {
+      subtitle = item[apiDefinition.subtitleIndex].toString();
+      if (Input.isNumeric(subtitle)) {
+        subtitle = Input.setThousandSeparator(
+            item[apiDefinition.subtitleIndex].toString());
+      }
+      subtitle = widget.beforeSubtitle + subtitle + widget.afterSubtitle;
+    }
+
     if (widget.itemBuilder != null) {
       return widget.itemBuilder(context, item, index);
     }
@@ -297,12 +324,31 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                       // ),
                     )
                   : null,
-              title: apiDefinition.titleIndex != null
-                  ? Text(item[apiDefinition.titleIndex].toString())
-                  : null,
-              subtitle: apiDefinition.subtitleIndex != null
-                  ? Text(item[apiDefinition.subtitleIndex].toString())
-                  : null,
+              title: apiDefinition.titleIndex != null ? Text(title) : null,
+              subtitle:
+                  apiDefinition.subtitleIndex != null ? Text(subtitle) : null,
+
+              // title: apiDefinition.titleIndex != null
+              //     ? Text(item[apiDefinition.beforeTitle].toString() +
+              //         item[apiDefinition.titleIndex].toString() +
+              //         item[apiDefinition.afterTitle].toString())
+              //     : null,
+              // subtitle: apiDefinition.subtitleIndex != null
+              //     ? Text(item[apiDefinition.beforeSubtitle] +
+              //         item[apiDefinition.subtitleIndex].toString() +
+              //         item[apiDefinition.afterSubtitle])
+              //     : null,
+
+              // title: apiDefinition.titleIndex != null
+              //     ? Text(beforeTitle +
+              //         title +
+              //         afterTitle)
+              //     : null,
+              // subtitle: apiDefinition.subtitleIndex != null
+              //     ? Text(beforeSubtitle +
+              //         subtitle +
+              //         afterSubtitle)
+              //     : null,
             ),
           ],
         ),
@@ -367,6 +413,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     if (items.length == 0) {
       return Center(child: Text("No Data"));
     }
+    print("Load Data Ex_list");
 
     return Padding(
       padding: const EdgeInsets.all(8.0),

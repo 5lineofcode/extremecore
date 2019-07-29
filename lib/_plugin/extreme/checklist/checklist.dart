@@ -51,6 +51,7 @@ class _CheckListState extends State<CheckList> {
 
     var response = await http.get(url);
     var obj = response;
+    var selectedItems = [];
 
     if (this.mounted) {
       setState(() {
@@ -67,6 +68,7 @@ class _CheckListState extends State<CheckList> {
             for (var checked in checkedItems) {
               if (checked["station_id"] == item["id"]) {
                 item["checked"] = true;
+                selectedItems.add(item);
                 break;
               } else {
                 item["checked"] = false;
@@ -74,6 +76,7 @@ class _CheckListState extends State<CheckList> {
             }
           }
         }
+        Input.set(widget.id, selectedItems);
       });
     }
   }
