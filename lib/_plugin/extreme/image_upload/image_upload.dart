@@ -186,7 +186,7 @@ class ExImageUploadState extends State<ExImageUpload> {
                   child: ExButton(
                     label: "Delete",
                     icon: Icons.delete,
-                    type: Colors.red,
+                    type: Session.themeColor,
                     onPressed: () {
                       setState(() {
                         imageUrl = "";
