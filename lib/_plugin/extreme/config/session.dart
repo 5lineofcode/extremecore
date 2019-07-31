@@ -11,6 +11,9 @@ class Session {
   static String email;
   static String password;
   static String mobile;
+  static String gopayQrCode;
+  static String ovoQrCode;
+  static String danaQrCode;
   static String appName = "";
 
   static bool isLogin = false;
@@ -53,8 +56,8 @@ class Session {
     // print("getAssetUrl");
     // print("$host/public/" + imageUrl);
     // return "$host/public/" + imageUrl;
-    print("getAssetUrl");
-    print("$storageUrl/" + imageUrl);
+    // print("getAssetUrl");
+    // print("$storageUrl/" + imageUrl);
     return "$storageUrl/" + imageUrl;
   }
 
