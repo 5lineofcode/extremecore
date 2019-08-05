@@ -24,6 +24,7 @@ class ExList extends StatefulWidget {
   final editPageTemplate;
 
   final dynamic itemBuilder;
+  final String pageType;
 
   ExList({
     this.title = "",
@@ -42,6 +43,7 @@ class ExList extends StatefulWidget {
     this.formPageTemplate,
     this.editPageTemplate,
     this.itemBuilder,
+    this.pageType = "Normal",
   });
 
   @override
@@ -407,11 +409,48 @@ use _refreshController.loadComplete() or loadNoData() to end loading
 
   getMainContent() {
     if (isLoading) {
-      return Center(child: Text("Loading"));
+      return Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(child: Image.asset("assets/gif/saji_cropped_breath.gif")),
+            Container(
+              height: 20.0,
+            ),
+            Text(
+              "Loading",
+              style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      );
     }
 
     if (items.length == 0) {
-      return Center(child: Text("No Data"));
+      return Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Center(
+              child: Image(
+                height: 200.0,
+                width: 200.0,
+                image: AssetImage("assets/images/empty_list.png"),
+              ),
+            ),
+            Container(
+              height: 20.0,
+            ),
+            Text(
+              "No Data",
+              style: TextStyle(
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
+      );
     }
     print("Load Data Ex_list");
 
@@ -419,18 +458,22 @@ use _refreshController.loadComplete() or loadNoData() to end loading
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: <Widget>[
-          widget.noDelete ? Container() : Container(
-            child: Text(
-              "<<< swipe to delete >>>",
-              style: TextStyle(
-                color: Colors.black54,
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-              ),
-            ),
-          ),
+          widget.noDelete
+              ? Container()
+              : Container(
+                  child: Text(
+                    "<<< swipe to delete >>>",
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold,
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.83,
+            height: widget.pageType == "Normal"
+                ? MediaQuery.of(context).size.height * 0.83
+                : MediaQuery.of(context).size.height * 0.77,
             child: SmartRefresher(
               enablePullDown: true,
               enablePullUp: true,
@@ -497,31 +540,36 @@ use _refreshController.loadComplete() or loadNoData() to end loading
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getAppBar(),
+      appBar: widget.pageType != "Normal" ? null : getAppBar(),
       floatingActionButton: widget.noFloatingActionButton == true
           ? Container()
-          : FloatingActionButton(
-              onPressed: () {
-                // Add your onPressed code here!
+          : Container(
+              margin: widget.pageType != "Normal"
+                  ? EdgeInsets.only(bottom: 50.0)
+                  : null,
+              child: FloatingActionButton(
+                onPressed: () {
+                  // Add your onPressed code here!
 
-                Input.set("selectedId", null);
-                if (widget.formPageTemplate != null) {
-                  Page.show(context, widget.formPageTemplate).then((hook) {
-                    loadData();
-                    setState(() {
-                      items = [];
+                  Input.set("selectedId", null);
+                  if (widget.formPageTemplate != null) {
+                    Page.show(context, widget.formPageTemplate).then((hook) {
+                      loadData();
+                      setState(() {
+                        items = [];
+                      });
                     });
-                  });
-                } else {
-                  SweetAlert.show(
-                    context,
-                    title:
-                        "Please add Property AddPageTemplate to ExList declaration!",
-                  );
-                }
-              },
-              child: Icon(FontAwesomeIcons.plus),
-              backgroundColor: Colors.grey[800],
+                  } else {
+                    SweetAlert.show(
+                      context,
+                      title:
+                          "Please add Property AddPageTemplate to ExList declaration!",
+                    );
+                  }
+                },
+                child: Icon(FontAwesomeIcons.plus),
+                backgroundColor: Colors.grey[800],
+              ),
             ),
       body: getMainContent(),
     );
