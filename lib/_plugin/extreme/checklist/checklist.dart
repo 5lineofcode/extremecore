@@ -38,7 +38,9 @@ class _CheckListState extends State<CheckList> {
 
   var items = [];
 
-  loadData(checkedItems) async {
+  loadData() async {
+    print("items in checklist.dart");
+    print(items);
     List<ParameterValue> params = [];
     params.add(ParameterValue(
       key: "page_count",

@@ -34,6 +34,8 @@ class ExImageUploadState extends State<ExImageUpload> {
       return;
     }
 
+    print("image_upload.dart ~~~~~~~~~~~~~ #1");
+
     String base64Image = base64Encode(image.readAsBytesSync());
 
     print(base64Image);
@@ -53,6 +55,8 @@ class ExImageUploadState extends State<ExImageUpload> {
         imageUrl = obj["image_url"];
 
         Input.set(widget.id, imageUrl);
+        print("imageUrl");
+        print(imageUrl);
         Navigator.of(context).pop();
       });
     }
