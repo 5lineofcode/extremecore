@@ -7,6 +7,8 @@ class ButtonType {
   static Color danger = Colors.red[400];
   static Color warning = Colors.orange;
   static Color info = Colors.lightBlue;
+  static Color print1 = Colors.red[400];
+  static Color print2 = Colors.purple;
   static Color selected = Session.themeColor;
   static Color unSelected = Colors.grey;
 }

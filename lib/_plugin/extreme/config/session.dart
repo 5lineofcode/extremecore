@@ -14,6 +14,9 @@ class Session {
   static String gopayQrCode;
   static String ovoQrCode;
   static String danaQrCode;
+  static String membershipLevel;
+  static dynamic expiredDate;
+  static int isCompleteWizard;
   static String appName = "";
 
   static bool isLogin = false;
