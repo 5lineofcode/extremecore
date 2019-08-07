@@ -18,6 +18,7 @@ class Session {
   static dynamic expiredDate;
   static int isCompleteWizard;
   static String appName = "";
+  static String appVersion = "1.1.0";
 
   static bool isLogin = false;
   static BluetoothDevice device;
@@ -52,7 +53,6 @@ class Session {
   static String publicUrl = "$host/public";
   static String storageUrl = "$host/storage/app";
 
-  static String appVersion = "";
   static String lastBuildTime = "";
 
   static String getAssetUrl(String imageUrl) {
