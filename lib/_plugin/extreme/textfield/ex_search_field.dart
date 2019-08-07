@@ -5,8 +5,8 @@ class ExSearchField extends StatefulWidget {
   final String id;
   final String label;
   final IconData icon;
-  final String displayField;
-  final String valueField;
+  final String displayField; //? dari ApiDefinition primaryKey
+  final String valueField; //? dari ApiDefinition titleIndex
   final String value;
   final String displayValue;
   final ApiDefinition apiDefinition;

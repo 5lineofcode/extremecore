@@ -21,12 +21,15 @@ class CheckList extends StatefulWidget {
   final ApiDefinition apiDefinition;
   final double height;
   final dynamic checkedItems;
+  final bool multipleSelect;
+
   CheckList({
     @required this.id,
     @required this.label,
     @required this.apiDefinition,
     this.height = 400.0,
     this.checkedItems,
+    this.multipleSelect = true,
   });
 
   @override
@@ -39,8 +42,6 @@ class _CheckListState extends State<CheckList> {
   var items = [];
 
   loadData(checkedItems) async {
-    print("items in checklist.dart");
-    print(items);
     List<ParameterValue> params = [];
     params.add(ParameterValue(
       key: "page_count",
@@ -56,30 +57,30 @@ class _CheckListState extends State<CheckList> {
     var selectedItems = [];
 
     if (this.mounted) {
-      // setState(() {
-      //   items = obj["data"];
+      setState(() {
+        items = obj["data"];
 
-      //   print("checklist ~~~~~~~~~~~~~~~~~~~~ items");
-      //   print(items);
-      //   print("checklist ~~~~~~~~~~~~~~~~~~~~ checkedItems");
-      //   print(checkedItems);
-      //   for (var item in items) {
-      //     if (checkedItems == null) {
-      //       item["checked"] = false;
-      //     } else {
-      //       for (var checked in checkedItems) {
-      //         if (checked["station_id"] == item["id"]) {
-      //           item["checked"] = true;
-      //           selectedItems.add(item);
-      //           break;
-      //         } else {
-      //           item["checked"] = false;
-      //         }
-      //       }
-      //     }
-      //   }
-      //   Input.set(widget.id, selectedItems);
-      // });
+        print("checklist ~~~~~~~~~~~~~~~~~~~~ items");
+        print(items);
+        print("checklist ~~~~~~~~~~~~~~~~~~~~ checkedItems");
+        print(checkedItems);
+        for (var item in items) {
+          if (checkedItems == null) {
+            item["checked"] = false;
+          } else {
+            for (var checked in checkedItems) {
+              if (checked["station_id"] == item["id"]) {
+                item["checked"] = true;
+                selectedItems.add(item);
+                break;
+              } else {
+                item["checked"] = false;
+              }
+            }
+          }
+        }
+        Input.set(widget.id, selectedItems);
+      });
     }
   }
 
@@ -98,7 +99,7 @@ class _CheckListState extends State<CheckList> {
     super.initState();
     Input.set(widget.id, []);
     apiDefinition = widget.apiDefinition;
-    // loadData(widget.checkedItems);
+    loadData(widget.checkedItems);
   }
 
   @override
@@ -134,18 +135,20 @@ class _CheckListState extends State<CheckList> {
               });
               saveInputtedData();
             },
-            child: Container(
-              color: Colors.orange,
-              padding: EdgeInsets.all(6.0),
-              child: Text(
-                "UnSelect All",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            child: widget.multipleSelect == false
+                ? Container()
+                : Container(
+                    color: Colors.orange,
+                    padding: EdgeInsets.all(6.0),
+                    child: Text(
+                      "UnSelect All",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
           ),
           Container(
             width: 10.0,
@@ -159,18 +162,20 @@ class _CheckListState extends State<CheckList> {
               });
               saveInputtedData();
             },
-            child: Container(
-              color: Colors.blue,
-              padding: EdgeInsets.all(6.0),
-              child: Text(
-                "Select All",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
+            child: widget.multipleSelect == false
+                ? Container()
+                : Container(
+                    color: Colors.blue,
+                    padding: EdgeInsets.all(6.0),
+                    child: Text(
+                      "Select All",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
           ),
         ],
       ),
@@ -181,9 +186,13 @@ class _CheckListState extends State<CheckList> {
       var newWidget = InkWell(
         onTap: () {
           setState(() {
+            if (widget.multipleSelect == false) {
+              items.forEach((oItem) {
+                oItem["checked"] = false;
+              });
+            }
+
             item["checked"] = item["checked"] == true ? false : true;
-            print("checklist ~~~~~~~~~~~~~~~ item checked");
-            print(item["checked"]);
             saveInputtedData();
           });
         },
@@ -209,6 +218,12 @@ class _CheckListState extends State<CheckList> {
                   value: item["checked"],
                   onChanged: (isChecked) {
                     setState(() {
+                      if (widget.multipleSelect == false) {
+                        items.forEach((oItem) {
+                          oItem["checked"] = false;
+                        });
+                      }
+
                       item["checked"] = isChecked;
                       saveInputtedData();
                     });
