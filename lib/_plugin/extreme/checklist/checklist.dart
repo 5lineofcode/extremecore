@@ -56,30 +56,30 @@ class _CheckListState extends State<CheckList> {
     var selectedItems = [];
 
     if (this.mounted) {
-      setState(() {
-        items = obj["data"];
+      // setState(() {
+      //   items = obj["data"];
 
-        print("checklist ~~~~~~~~~~~~~~~~~~~~ items");
-        print(items);
-        print("checklist ~~~~~~~~~~~~~~~~~~~~ checkedItems");
-        print(checkedItems);
-        for (var item in items) {
-          if (checkedItems == null) {
-            item["checked"] = false;
-          } else {
-            for (var checked in checkedItems) {
-              if (checked["station_id"] == item["id"]) {
-                item["checked"] = true;
-                selectedItems.add(item);
-                break;
-              } else {
-                item["checked"] = false;
-              }
-            }
-          }
-        }
-        Input.set(widget.id, selectedItems);
-      });
+      //   print("checklist ~~~~~~~~~~~~~~~~~~~~ items");
+      //   print(items);
+      //   print("checklist ~~~~~~~~~~~~~~~~~~~~ checkedItems");
+      //   print(checkedItems);
+      //   for (var item in items) {
+      //     if (checkedItems == null) {
+      //       item["checked"] = false;
+      //     } else {
+      //       for (var checked in checkedItems) {
+      //         if (checked["station_id"] == item["id"]) {
+      //           item["checked"] = true;
+      //           selectedItems.add(item);
+      //           break;
+      //         } else {
+      //           item["checked"] = false;
+      //         }
+      //       }
+      //     }
+      //   }
+      //   Input.set(widget.id, selectedItems);
+      // });
     }
   }
 
@@ -98,7 +98,7 @@ class _CheckListState extends State<CheckList> {
     super.initState();
     Input.set(widget.id, []);
     apiDefinition = widget.apiDefinition;
-    loadData(widget.checkedItems);
+    // loadData(widget.checkedItems);
   }
 
   @override
