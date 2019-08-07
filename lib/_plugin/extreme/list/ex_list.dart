@@ -427,6 +427,8 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     }
 
     if (items.length == 0) {
+      Input.set("no_data", true);
+
       return Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -453,6 +455,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
       );
     }
     print("Load Data Ex_list");
+    Input.set("no_data", false);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
