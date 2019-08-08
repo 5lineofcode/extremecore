@@ -95,39 +95,40 @@ class _ExTextFieldState extends State<ExTextField> {
     Input.controllerList[widget.id] = textEditingController;
     textEditingController.text = widget.value;
     textEditingController.addListener(() {
+      print("textEditingController.addListener");
       Input.set(widget.id, textEditingController.text);
       // saveToHistory(widget.id, textEditingController.text);
     });
 
     //FocusNode
-    //TODO:: DK : Gw remove dulu biar fokus ga ke kiri terus 
-    // focusNode.addListener(() {
-    //   if (focusNode.hasFocus) {
-    //     if (this.mounted) {
-    //       setState(() {
-    //         showSuffix = true;
-    //       });
-    //       if (widget.onFocus != null) {
-    //         widget.onFocus();
-    //       }
-    //     }
-    //   } else {
-    //     if (this.mounted) {
-    //       setState(() {
-    //         showSuffix = false;
-    //       });
-    //     }
-    //   }
-    // });
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        if (this.mounted) {
+          setState(() {
+            showSuffix = true;
+          });
+          if (widget.onFocus != null) {
+            widget.onFocus();
+          }
+        }
+      } else {
+        if (this.mounted) {
+          setState(() {
+            showSuffix = false;
+          });
+        }
+      }
+    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (Input.get(widget.id) != null) {
-      textEditingController.text = Input.get(widget.id).toString() == "null" ? "" : Input.get(widget.id).toString();
-    }
+    //TODO:cek buat apa?
+    // if (Input.get(widget.id) != null) {
+    //   textEditingController.text = Input.get(widget.id).toString() == "null" ? "" : Input.get(widget.id).toString();
+    // }
 
     return InkWell(
       onTap: () {
@@ -148,6 +149,7 @@ class _ExTextFieldState extends State<ExTextField> {
           onChanged: (text) {
             print("onChanged called");
             if (widget.onChanged != null) {
+              print("widget.onChanged != null");
               widget.onChanged();
               SystemChannels.textInput.invokeMethod('TextInput.hide');
             }
