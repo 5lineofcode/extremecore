@@ -22,6 +22,7 @@ class ExTextField extends StatefulWidget {
   final bool useIcon;
   final bool useSuffix;
   final bool useAutoFocus;
+  final bool valueFromController;
 
   final bool enable;
 
@@ -47,6 +48,7 @@ class ExTextField extends StatefulWidget {
     this.useIcon = false,
     this.useSuffix = true,
     this.useAutoFocus = false,
+    this.valueFromController = false,
     this.textAlign = TextAlign.left,
     this.contentPadding = const EdgeInsets.all(8.0),
     this.fontSize = 16.0,
@@ -95,7 +97,6 @@ class _ExTextFieldState extends State<ExTextField> {
     Input.controllerList[widget.id] = textEditingController;
     textEditingController.text = widget.value;
     textEditingController.addListener(() {
-      print("textEditingController.addListener");
       Input.set(widget.id, textEditingController.text);
       // saveToHistory(widget.id, textEditingController.text);
     });
@@ -125,10 +126,10 @@ class _ExTextFieldState extends State<ExTextField> {
 
   @override
   Widget build(BuildContext context) {
-    //TODO:cek buat apa?
-    // if (Input.get(widget.id) != null) {
-    //   textEditingController.text = Input.get(widget.id).toString() == "null" ? "" : Input.get(widget.id).toString();
-    // }
+    //Khusus untuk searchfield/textarea
+    if (Input.get(widget.id) != null && widget.valueFromController == true) {
+      textEditingController.text = Input.get(widget.id).toString() == "null" ? "" : Input.get(widget.id).toString();
+    }
 
     return InkWell(
       onTap: () {
