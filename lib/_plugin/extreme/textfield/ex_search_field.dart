@@ -95,6 +95,7 @@ class _ExSearchFieldState extends State<ExSearchField> {
       useIcon: true,
       enable: false,
       value: widget.displayValue,
+      valueFromController: true,
       onContainerTap: () { 
         print("Tapped from SearchField");
         Page.show(

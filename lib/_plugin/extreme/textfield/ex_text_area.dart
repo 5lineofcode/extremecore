@@ -46,6 +46,7 @@ class _ExTextAreaState extends State<ExTextArea> {
       value: widget.value != null ? widget.value : "",
       maxLines: widget.maxLines,
       keyboardType: TextInputType.multiline,
+      valueFromController: true,
       onContainerTap: () {
         Page.show(
             widget.context,

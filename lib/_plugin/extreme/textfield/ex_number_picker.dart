@@ -81,6 +81,7 @@ class _ExNumberPickerState extends State<ExNumberPicker> {
       useIcon: true,
       enable: false,
       value: widget.value != null ? widget.value : "",
+      valueFromController: true,
       onContainerTap: () {
         showBottomSheet(context);
       },

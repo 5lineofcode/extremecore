@@ -7,7 +7,7 @@ class ExDatePicker extends StatefulWidget {
   final IconData icon;
   final String value;
   final BuildContext context;
-  
+
   final bool enableDatePicker;
 
   ExDatePicker({
@@ -37,6 +37,8 @@ class _ExDatePickerState extends State<ExDatePicker> {
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate;
+
     return ExTextField(
       id: widget.id,
       label: widget.label,
@@ -45,22 +47,29 @@ class _ExDatePickerState extends State<ExDatePicker> {
       useIcon: true,
       enable: false,
       value: widget.value != null ? widget.value : "",
-      onContainerTap: () { 
-        if(widget.enableDatePicker==false){
+      valueFromController: true,
+      onContainerTap: () {
+        if (widget.enableDatePicker == false) {
           return;
         }
         DatePicker.showDatePicker(context,
             theme: DatePickerTheme(),
             showTitleActions: true,
-            minTime: DateTime(2018, 3, 5),
-            maxTime: DateTime(2019, 6, 7), onChanged: (date) {
+            minTime: DateTime(1900, 1, 1),
+            maxTime: DateTime(2050, 12, 31), onChanged: (date) {
           Input.set(widget.id, date);
           Input.controllerList[widget.id].text = date.toString();
           print('change $date');
         }, onConfirm: (date) {
-          Input.set(widget.id, date);
-          Input.controllerList[widget.id].text = date.toString();
+          formattedDate = DateFormat('yyyy-MM-dd').format(date);
           print('confirm $date');
+          print('confirm $formattedDate');
+          
+          Input.set(widget.id, formattedDate);
+          Input.controllerList[widget.id].text = formattedDate.toString();
+
+          // Input.set(widget.id, date);
+          // Input.controllerList[widget.id].text = date.toString();
         }, currentTime: DateTime.now(), locale: LocaleType.en);
       },
     );

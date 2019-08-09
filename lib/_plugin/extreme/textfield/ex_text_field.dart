@@ -22,6 +22,7 @@ class ExTextField extends StatefulWidget {
   final bool useIcon;
   final bool useSuffix;
   final bool useAutoFocus;
+  final bool valueFromController;
 
   final bool enable;
 
@@ -47,6 +48,7 @@ class ExTextField extends StatefulWidget {
     this.useIcon = false,
     this.useSuffix = true,
     this.useAutoFocus = false,
+    this.valueFromController = false,
     this.textAlign = TextAlign.left,
     this.contentPadding = const EdgeInsets.all(8.0),
     this.fontSize = 16.0,
@@ -100,32 +102,32 @@ class _ExTextFieldState extends State<ExTextField> {
     });
 
     //FocusNode
-    //TODO:: DK : Gw remove dulu biar fokus ga ke kiri terus 
-    // focusNode.addListener(() {
-    //   if (focusNode.hasFocus) {
-    //     if (this.mounted) {
-    //       setState(() {
-    //         showSuffix = true;
-    //       });
-    //       if (widget.onFocus != null) {
-    //         widget.onFocus();
-    //       }
-    //     }
-    //   } else {
-    //     if (this.mounted) {
-    //       setState(() {
-    //         showSuffix = false;
-    //       });
-    //     }
-    //   }
-    // });
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        if (this.mounted) {
+          setState(() {
+            showSuffix = true;
+          });
+          if (widget.onFocus != null) {
+            widget.onFocus();
+          }
+        }
+      } else {
+        if (this.mounted) {
+          setState(() {
+            showSuffix = false;
+          });
+        }
+      }
+    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (Input.get(widget.id) != null) {
+    //Khusus untuk searchfield/textarea
+    if (Input.get(widget.id) != null && widget.valueFromController == true) {
       textEditingController.text = Input.get(widget.id).toString() == "null" ? "" : Input.get(widget.id).toString();
     }
 
@@ -148,6 +150,7 @@ class _ExTextFieldState extends State<ExTextField> {
           onChanged: (text) {
             print("onChanged called");
             if (widget.onChanged != null) {
+              print("widget.onChanged != null");
               widget.onChanged();
               SystemChannels.textInput.invokeMethod('TextInput.hide');
             }
