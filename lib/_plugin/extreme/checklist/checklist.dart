@@ -69,13 +69,22 @@ class _CheckListState extends State<CheckList> {
             item["checked"] = false;
           } else {
             for (var checked in checkedItems) {
-              if (checked["station_id"] == item["id"]) {
+              print(checked["id_cms_privileges"]);
+              print(item["id"]);
+
+              if (checked["station_id"].toString() == item["id"].toString()) {
                 item["checked"] = true;
                 selectedItems.add(item);
                 break;
-              } else {
-                item["checked"] = false;
               }
+
+              if (checked["id_cms_privileges"].toString() == item["id"].toString()) {
+                item["checked"] = true;
+                selectedItems.add(item);
+                break;
+              }
+
+              item["checked"] = false;
             }
           }
         }
