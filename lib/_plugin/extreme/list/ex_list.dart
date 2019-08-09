@@ -232,11 +232,24 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               },
             ),
             FlatButton(
-              child: const Text('Yes'),
-              onPressed: () {
-                Navigator.pop(context, true); // showDialog() returns true
-              },
-            ),
+                child: const Text('Yes'),
+                //TODO: Andhika : generate table layout di dismiss ex list ga bisa, tapi di add/update bisa
+                // onPressed: () async {
+                //   print(widget.title);
+                //   if (widget.title == "Table Group") {
+                //     print("~~~~~~~~~~~~~~~~~~~~~zzz");
+                //     var url = Session.apiUrl +
+                //         "/custom/table_group/generateTableLayout";
+                //     await http.post(url, {});
+                //     print("~~~~~~~~~~~~~~~~~~~~~yyy");
+                //   }
+                //   print("~~~~~~~~~~~~~~~~~~~~~xxx");
+                //   Navigator.pop(context, true);
+                // }
+                onPressed: () {
+                  Navigator.pop(context, true); // showDialog() returns true
+                },
+                ),
           ],
         );
       },
