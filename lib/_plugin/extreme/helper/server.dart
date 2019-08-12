@@ -185,6 +185,33 @@ class Alert {
       },
     );
   }
+
+  static showWarning({
+    BuildContext context,
+    String title,
+    String message,
+    dynamic onOk,
+    dynamic onCancel,
+  }) {
+    SweetAlert.show(
+      context,
+      title: title,
+      subtitle: message,
+      style: SweetAlertStyle.confirm,
+      onPress: (isConfirmed) {
+        if (isConfirmed) {
+          if (onOk != null) {
+            onOk();
+          }
+
+          if (onCancel != null) {
+            onCancel();
+          }
+        }
+        return true;
+      },
+    );
+  }
 }
 
 class Loading {

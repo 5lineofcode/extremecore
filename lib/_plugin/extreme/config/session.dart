@@ -24,6 +24,7 @@ class Session {
   static BluetoothDevice device;
   static bool connected = false;
   static bool pressed = false;
+  static bool expiredNoted = false;
 
   //? Colors
   static Color themeColor = Color(0xffA40C33);
