@@ -18,7 +18,6 @@ class Session {
   static dynamic expiredDate;
   static int isCompleteWizard;
   static String appName = "";
-  static String appVersion = "1.1.0";
 
   static bool isLogin = false;
   static BluetoothDevice device;
