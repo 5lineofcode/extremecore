@@ -466,6 +466,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
         ),
       );
     }
+    Input.set("no_data", false);
     print("Load Data Ex_list");
     Input.set("no_data", false);
 
