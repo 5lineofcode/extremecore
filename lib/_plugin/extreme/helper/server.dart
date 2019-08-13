@@ -192,12 +192,14 @@ class Alert {
     String message,
     dynamic onOk,
     dynamic onCancel,
+    bool showCancel = true,
   }) {
     SweetAlert.show(
       context,
       title: title,
       subtitle: message,
       style: SweetAlertStyle.confirm,
+      showCancelButton: showCancel,
       onPress: (isConfirmed) {
         if (isConfirmed) {
           if (onOk != null) {
