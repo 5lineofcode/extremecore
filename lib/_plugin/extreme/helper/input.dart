@@ -28,7 +28,11 @@ class Input {
     if (s == null) {
       return false;
     }
-    return double.parse(s, (e) => null) != null;
+    return double.parse(
+          s,
+          //(e) => null,
+        ) !=
+        null;
   }
 
   static getValueOnEdit(key, isEdit) {
