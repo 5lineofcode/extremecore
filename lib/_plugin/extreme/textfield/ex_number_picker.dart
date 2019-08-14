@@ -5,6 +5,7 @@ class ExNumberPicker extends StatefulWidget {
   final String id;
   final String label;
   final IconData icon; 
+  final bool useIcon; 
   final String value;
   final BuildContext context;
 
@@ -16,6 +17,7 @@ final int maxValue;
     @required this.label,
     this.minValue = 0,
     this.maxValue = 1000000,
+    this.useIcon = true,
     this.icon = Icons.confirmation_number,
     this.value,
     @required this.context,
@@ -78,7 +80,7 @@ class _ExNumberPickerState extends State<ExNumberPicker> {
       label: widget.label,
       icon: widget.icon,
       useBorder: true,
-      useIcon: true,
+      useIcon: widget.useIcon,
       enable: false,
       value: widget.value != null ? widget.value : "",
       valueFromController: true,

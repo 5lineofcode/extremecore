@@ -128,7 +128,9 @@ class _ExTextFieldState extends State<ExTextField> {
   Widget build(BuildContext context) {
     //Khusus untuk searchfield/textarea
     if (Input.get(widget.id) != null && widget.valueFromController == true) {
-      textEditingController.text = Input.get(widget.id).toString() == "null" ? "" : Input.get(widget.id).toString();
+      textEditingController.text = Input.get(widget.id).toString() == "null"
+          ? ""
+          : Input.get(widget.id).toString();
     }
 
     return InkWell(
@@ -151,7 +153,7 @@ class _ExTextFieldState extends State<ExTextField> {
             print("onChanged called");
             if (widget.onChanged != null) {
               print("widget.onChanged != null");
-              widget.onChanged();
+              widget.onChanged(text);
               SystemChannels.textInput.invokeMethod('TextInput.hide');
             }
           },
