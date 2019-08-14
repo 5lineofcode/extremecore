@@ -30,7 +30,7 @@ class Input {
     }
     return double.parse(
           s,
-          //(e) => null,
+          (e) => null,
         ) !=
         null;
   }
