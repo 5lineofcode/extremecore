@@ -392,10 +392,10 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                             child: Icon(Icons.sort),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.search),
-                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Icon(Icons.search),
+                        // )
                       ])
             : Saji.getAppBar(
                 context: widget.noContext ? null : context,
