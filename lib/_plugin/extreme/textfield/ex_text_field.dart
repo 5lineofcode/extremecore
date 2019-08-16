@@ -142,6 +142,7 @@ class _ExTextFieldState extends State<ExTextField> {
       child: Container(
         padding: EdgeInsets.only(bottom: 8.0),
         child: TextField(
+          autocorrect: false,
           keyboardType: widget.keyboardType,
           focusNode: focusNode,
           controller: textEditingController,
@@ -154,7 +155,7 @@ class _ExTextFieldState extends State<ExTextField> {
             if (widget.onChanged != null) {
               print("widget.onChanged != null");
               widget.onChanged(text);
-              SystemChannels.textInput.invokeMethod('TextInput.hide');
+              // SystemChannels.textInput.invokeMethod('TextInput.hide');
             }
           },
           onSubmitted: (text) {
