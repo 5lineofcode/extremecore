@@ -12,6 +12,7 @@ class ButtonType {
   static Color selected = Session.themeColor;
   static Color themeColor = Session.themeColor;
   static Color unSelected = Colors.grey;
+  static Color themeButtonColor = Color(0xffe44c5a);
 }
 
 class ExButton extends StatelessWidget {
