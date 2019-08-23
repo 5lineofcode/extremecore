@@ -28,6 +28,7 @@ class Session {
   static bool expiredNoted = false;
 
   //? Colors
+  static Color themeButtonColor = Color(0xffe44c5a);
   static Color themeColor = Color(0xffA40C33);
   static Color colorOccupied = Color(0xffDFC7B4);
   static Color colorEmpty = Color(0xff8A8989);

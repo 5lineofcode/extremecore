@@ -198,7 +198,7 @@ class _ExTextFieldState extends State<ExTextField> {
             border: !widget.useBorder
                 ? null
                 : OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(4.0),
+                    borderRadius: BorderRadius.circular(5.0),
                   ),
           ),
         ),
