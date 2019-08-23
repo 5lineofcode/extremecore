@@ -16,6 +16,7 @@ class Session {
   static String danaQrCode;
   static String membershipLevel;
   static dynamic expiredDate;
+  static dynamic serverDate;
   static int isCompleteWizard;
   static String appName = "";
 

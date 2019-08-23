@@ -488,7 +488,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                 ),
           Container(
             height: widget.pageType == "Normal"
-                ? MediaQuery.of(context).size.height * 0.83
+                ? MediaQuery.of(context).size.height * 0.80
                 : MediaQuery.of(context).size.height * 0.77,
             child: SmartRefresher(
               enablePullDown: true,
@@ -496,7 +496,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               header: WaterDropHeader(
                 complete: Wrap(
                   children: [
-                    Icon(
+                      Icon(
                       Icons.check_box,
                       color: Colors.green,
                     ),
