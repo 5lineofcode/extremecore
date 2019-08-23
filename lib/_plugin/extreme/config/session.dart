@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class Session {
   //User Data
+  static String userId;
   static String username;
   static int branchId;
   static int idPrivileges;
