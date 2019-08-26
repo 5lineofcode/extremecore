@@ -128,9 +128,21 @@ class _ExTextFieldState extends State<ExTextField> {
   Widget build(BuildContext context) {
     //Khusus untuk searchfield/textarea
     if (Input.get(widget.id) != null && widget.valueFromController == true) {
-      textEditingController.text = Input.get(widget.id).toString() == "null"
-          ? ""
-          : Input.get(widget.id).toString();
+      // textEditingController.text = Input.get(widget.id).toString() == "null"
+      //     ? ""
+      //     : Input.get(widget.id).toString();
+
+
+      //! FIX!! Cursor ke posisi 0 terus
+      var cursorPos = textEditingController.selection;
+
+      textEditingController.text = Input.get(widget.id).toString() ?? '';
+
+      if (cursorPos.start > textEditingController.text.length) {
+        cursorPos = new TextSelection.fromPosition(
+            new TextPosition(offset: textEditingController.text.length));
+      }
+      textEditingController.selection = cursorPos;
     }
 
     return InkWell(
