@@ -176,6 +176,12 @@ class ServerApi {
     return api;
   }
 
+  Api get transferRequest {
+    var api = new Api();
+    api.endpoint = "transfer_requests";
+    return api;
+  }
+
   Api get paymentMethod {
     var api = new Api();
     api.endpoint = "payment_method";
