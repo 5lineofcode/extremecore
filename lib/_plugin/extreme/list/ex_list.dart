@@ -232,24 +232,24 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               },
             ),
             FlatButton(
-                child: const Text('Yes'),
-                //TODO: Andhika : generate table layout di dismiss ex list ga bisa, tapi di add/update bisa
-                // onPressed: () async {
-                //   print(widget.title);
-                //   if (widget.title == "Table Group") {
-                //     print("~~~~~~~~~~~~~~~~~~~~~zzz");
-                //     var url = Session.apiUrl +
-                //         "/custom/table_group/generateTableLayout";
-                //     await http.post(url, {});
-                //     print("~~~~~~~~~~~~~~~~~~~~~yyy");
-                //   }
-                //   print("~~~~~~~~~~~~~~~~~~~~~xxx");
-                //   Navigator.pop(context, true);
-                // }
-                onPressed: () {
-                  Navigator.pop(context, true); // showDialog() returns true
-                },
-                ),
+              child: const Text('Yes'),
+              //TODO: Andhika : generate table layout di dismiss ex list ga bisa, tapi di add/update bisa
+              // onPressed: () async {
+              //   print(widget.title);
+              //   if (widget.title == "Table Group") {
+              //     print("~~~~~~~~~~~~~~~~~~~~~zzz");
+              //     var url = Session.apiUrl +
+              //         "/custom/table_group/generateTableLayout";
+              //     await http.post(url, {});
+              //     print("~~~~~~~~~~~~~~~~~~~~~yyy");
+              //   }
+              //   print("~~~~~~~~~~~~~~~~~~~~~xxx");
+              //   Navigator.pop(context, true);
+              // }
+              onPressed: () {
+                Navigator.pop(context, true); // showDialog() returns true
+              },
+            ),
           ],
         );
       },
@@ -443,25 +443,40 @@ use _refreshController.loadComplete() or loadNoData() to end loading
       Input.set("no_data", true);
       return Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.3,
+            ),
             Center(
               child: Image(
-                height: 200.0,
-                width: 200.0,
+                height: MediaQuery.of(context).size.width * 0.25,
+                width: MediaQuery.of(context).size.width * 0.25,
                 image: AssetImage("assets/images/empty_list.png"),
               ),
-            ),
-            Container(
-              height: 20.0,
             ),
             Text(
               "No Data",
               style: TextStyle(
-                fontSize: 30.0,
+                fontSize: MediaQuery.of(context).size.width * 0.05,
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.05,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.5,
+              decoration: BoxDecoration(
+                color: Colors.red[100],
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+              child: Text(
+                "Please add new data by pressing (+) button",
+                textAlign: TextAlign.center,
+              ),
+            )
           ],
         ),
       );
@@ -496,7 +511,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               header: WaterDropHeader(
                 complete: Wrap(
                   children: [
-                      Icon(
+                    Icon(
                       Icons.check_box,
                       color: Colors.green,
                     ),
