@@ -26,6 +26,7 @@ class Session {
   static bool connected = false;
   static bool pressed = false;
   static bool expiredNoted = false;
+  static bool allowedToPrint = false;
 
   //? Colors
   static Color themeButtonColor = Color(0xffe44c5a);
