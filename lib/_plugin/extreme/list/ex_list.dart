@@ -455,15 +455,15 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                 image: AssetImage("assets/images/empty_list.png"),
               ),
             ),
-            Text(
-              "No Data",
-              style: TextStyle(
-                fontSize: MediaQuery.of(context).size.width * 0.05,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            // Text(
+            //   "No Data",
+            //   style: TextStyle(
+            //     fontSize: MediaQuery.of(context).size.width * 0.05,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
             SizedBox(
-              height: MediaQuery.of(context).size.width * 0.05,
+              height: MediaQuery.of(context).size.width * 0.03,
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.5,
