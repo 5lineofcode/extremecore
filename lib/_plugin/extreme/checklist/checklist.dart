@@ -248,7 +248,7 @@ class _CheckListState extends State<CheckList> {
 
     return Container(
       padding: EdgeInsets.all(6.0),
-      color: Colors.red[100],
+      color: Colors.grey[300],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: columnItems,
