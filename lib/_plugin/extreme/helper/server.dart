@@ -214,6 +214,49 @@ class Alert {
       },
     );
   }
+
+  static showAlertDialog({
+    BuildContext context,
+    String title,
+    String message,
+    String strCancel = "Cancel",
+    String strOk = "Ok",
+    IconData iconCancel = FontAwesomeIcons.times,
+    IconData iconOk = FontAwesomeIcons.check,
+    dynamic onOk,
+    bool showCancel = true,
+    bool barrierDismissable = true,
+  }) {
+    showDialog(
+        barrierDismissible: barrierDismissable,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(message),
+            actions: <Widget>[
+              showCancel == false ? Container() : ExButton(
+                label: "Cancel",
+                icon: iconCancel,
+                type: ButtonType.themeButtonColor,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              ExButton(
+                label: "Confirm",
+                icon: iconOk,
+                type: ButtonType.themeButtonColor,
+                onPressed: () {
+                  if (onOk != null) {
+                    onOk();
+                  }
+                },
+              ),
+            ],
+          );
+        });
+  }
 }
 
 class Loading {
