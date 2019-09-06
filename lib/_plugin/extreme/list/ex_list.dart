@@ -473,7 +473,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               ),
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
               child: Text(
-                "Please add new data by pressing (+) button",
+                "You can add "+widget.title+" by pressing (+) button",
                 textAlign: TextAlign.center,
               ),
             )
