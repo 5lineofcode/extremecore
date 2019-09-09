@@ -56,6 +56,7 @@ class EX extends State<ExList> {
 
   static EX instance;
   static List items = [];
+  List itemsBackup = [];
   String nextPageUrl;
   String prevUrl;
   String title;
@@ -121,6 +122,7 @@ class EX extends State<ExList> {
     if (this.mounted) {
       setState(() {
         items = obj["data"];
+        itemsBackup = items;
         nextPageUrl = obj["next_page_url"];
         isLoading = false;
 
@@ -372,6 +374,56 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     );
   }
 
+  PreferredSize buildSearchBar() {
+    return PreferredSize(
+      child: Container(
+        padding: EdgeInsets.all(2.0),
+        child: Card(
+          child: Container(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextField(
+                    onChanged: (text) {
+                      var search = text.toString().toLowerCase();
+                      items = itemsBackup;
+                      items = items
+                          .where((i) =>
+                              i[apiDefinition.titleIndex]
+                                  .toString()
+                                  .toLowerCase()
+                                  .indexOf(search) >
+                              -1)
+                          .toList();
+                      setState(() {});
+                    },
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: "Search by Name",
+                      hintStyle: TextStyle(
+                        fontFamily: 'RobotoLight',
+                        fontSize: 15,
+                        color: Color(0xffC0C0C0),
+                      ),
+                      icon: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          FontAwesomeIcons.search,
+                          size: 15,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      preferredSize: Size.fromHeight(80.0),
+    );
+  }
+
   getAppBar() {
     return widget.noAppBar
         ? null
@@ -473,7 +525,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               ),
               padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
               child: Text(
-                "You can add "+widget.title+" by pressing (+) button",
+                "You can add " + widget.title + " by pressing (+) button",
                 textAlign: TextAlign.center,
               ),
             )
@@ -483,7 +535,6 @@ use _refreshController.loadComplete() or loadNoData() to end loading
     }
     Input.set("no_data", false);
     print("Load Data Ex_list");
-    Input.set("no_data", false);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -503,8 +554,8 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                 ),
           Container(
             height: widget.pageType == "Normal"
-                ? MediaQuery.of(context).size.height * 0.80
-                : MediaQuery.of(context).size.height * 0.77,
+                ? MediaQuery.of(context).size.height * 0.75
+                : MediaQuery.of(context).size.height * 0.72,
             child: SmartRefresher(
               enablePullDown: true,
               enablePullUp: true,
@@ -571,38 +622,43 @@ use _refreshController.loadComplete() or loadNoData() to end loading
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.pageType != "Normal" ? null : getAppBar(),
-      floatingActionButton: widget.noFloatingActionButton == true
-          ? Container()
-          : Container(
-              margin: widget.pageType != "Normal"
-                  ? EdgeInsets.only(bottom: 50.0)
-                  : null,
-              child: FloatingActionButton(
-                onPressed: () {
-                  // Add your onPressed code here!
+        appBar: widget.pageType != "Normal" ? null : getAppBar(),
+        resizeToAvoidBottomPadding: false,
+        floatingActionButton: widget.noFloatingActionButton == true
+            ? Container()
+            : Container(
+                margin: widget.pageType != "Normal"
+                    ? EdgeInsets.only(bottom: 50.0)
+                    : null,
+                child: FloatingActionButton(
+                  onPressed: () {
+                    // Add your onPressed code here!
 
-                  Input.set("selectedId", null);
-                  if (widget.formPageTemplate != null) {
-                    Page.show(context, widget.formPageTemplate).then((hook) {
-                      loadData();
-                      setState(() {
-                        items = [];
+                    Input.set("selectedId", null);
+                    if (widget.formPageTemplate != null) {
+                      Page.show(context, widget.formPageTemplate).then((hook) {
+                        loadData();
+                        setState(() {
+                          items = [];
+                        });
                       });
-                    });
-                  } else {
-                    SweetAlert.show(
-                      context,
-                      title:
-                          "Please add Property AddPageTemplate to ExList declaration!",
-                    );
-                  }
-                },
-                child: Icon(FontAwesomeIcons.plus),
-                backgroundColor: Colors.grey[800],
+                    } else {
+                      SweetAlert.show(
+                        context,
+                        title:
+                            "Please add Property AddPageTemplate to ExList declaration!",
+                      );
+                    }
+                  },
+                  child: Icon(FontAwesomeIcons.plus),
+                  backgroundColor: Colors.grey[800],
+                ),
               ),
-            ),
-      body: getMainContent(),
-    );
+        body: Column(
+          children: <Widget>[
+            buildSearchBar(),
+            getMainContent(),
+          ],
+        ));
   }
 }
