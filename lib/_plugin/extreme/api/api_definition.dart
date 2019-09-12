@@ -6,6 +6,8 @@ class ApiDefinition {
   final String leadingPhotoIndex;
   final String titleIndex;
   final String subtitleIndex;
+  // final String subText1;
+  // final String subText2;
 
   //aditional field
   final String headerLeft;
@@ -26,6 +28,8 @@ class ApiDefinition {
     @required this.leadingPhotoIndex,
     @required this.titleIndex,
     @required this.subtitleIndex,
+    // this.subText1,
+    // this.subText2,
 
     //! Will Be Removed, because Custom Item Template
     this.headerLeft,

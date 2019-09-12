@@ -4,6 +4,7 @@ import 'package:extremecore/core.dart';
 class ExSearchField extends StatefulWidget {
   final String id;
   final String label;
+  final String beforeSubtitle;
   final IconData icon;
   final String displayField; //? dari ApiDefinition primaryKey
   final String valueField; //? dari ApiDefinition titleIndex
@@ -15,6 +16,7 @@ class ExSearchField extends StatefulWidget {
   ExSearchField({
     @required this.id,
     @required this.label,
+    this.beforeSubtitle = "",
     this.icon,
     @required this.displayField,
     @required this.valueField,
@@ -32,15 +34,19 @@ class _ExSearchFieldState extends State<ExSearchField> {
   @override
   void initState() {
     super.initState();
-    Input.set(widget.id + "_item", null);
+    // Input.set(widget.id + "_item", null);
     Input.set(widget.id + "_displayField", widget.displayValue);
     Input.set(widget.id, widget.value);
+    print("================================");
+    print(Input.get(widget.id));
+    print(Input.get(widget.id + "_item"));
   }
 
   getList() {
     if (widget.apiDefinition != null) {
       return ExList(
         title: widget.label,
+        beforeSubtitle: widget.beforeSubtitle,
         noDelete: true,
         onItemSelected: (item) {
           print("You Select ");
@@ -57,6 +63,8 @@ class _ExSearchFieldState extends State<ExSearchField> {
           print("#1.4 $value1");
           print("#1.5 $value2");
           print("#1.6 $value3");
+          print(Input.get(widget.id + "_item"));
+          print(Input.get("discount_id_item")["discount_type"]);
         },
         noActionsButton: true,
         noFloatingActionButton: true,
@@ -96,7 +104,7 @@ class _ExSearchFieldState extends State<ExSearchField> {
       enable: false,
       value: widget.displayValue,
       valueFromController: true,
-      onContainerTap: () { 
+      onContainerTap: () {
         print("Tapped from SearchField");
         Page.show(
           context,
