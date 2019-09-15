@@ -61,6 +61,8 @@ class EX extends State<ExList> {
   String prevUrl;
   String title;
   String subtitle;
+  // String subtext1 = "";
+  // String subtext2 = "";
 
   static reload() {
     EX.instance.setState(() {});
@@ -110,8 +112,9 @@ class EX extends State<ExList> {
           "sort_field=${apiDefinition.sortField}&sort_order=${apiDefinition.sortOrder}";
     }
 
-    var url = Session.apiUrl +
-        "/table/${apiDefinition.endpoint}$whereQuery$sortQuery";
+    // var url = Session.apiUrl + "/table/${apiDefinition.endpoint}$whereQuery$sortQuery";
+    var url = Session.apiUrl + "/get-all/${apiDefinition.endpoint}$whereQuery$sortQuery";
+    print(url);
     var response = await http.get(url);
 
     print(response.toString());
@@ -235,19 +238,6 @@ use _refreshController.loadComplete() or loadNoData() to end loading
             ),
             FlatButton(
               child: const Text('Yes'),
-              //TODO: Andhika : generate table layout di dismiss ex list ga bisa, tapi di add/update bisa
-              // onPressed: () async {
-              //   print(widget.title);
-              //   if (widget.title == "Table Group") {
-              //     print("~~~~~~~~~~~~~~~~~~~~~zzz");
-              //     var url = Session.apiUrl +
-              //         "/custom/table_group/generateTableLayout";
-              //     await http.post(url, {});
-              //     print("~~~~~~~~~~~~~~~~~~~~~yyy");
-              //   }
-              //   print("~~~~~~~~~~~~~~~~~~~~~xxx");
-              //   Navigator.pop(context, true);
-              // }
               onPressed: () {
                 Navigator.pop(context, true); // showDialog() returns true
               },
@@ -298,6 +288,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
       title = widget.beforeTitle + title + widget.afterTitle;
     }
 
+    print(apiDefinition.subtitleIndex);
     if (apiDefinition.subtitleIndex != null) {
       subtitle = item[apiDefinition.subtitleIndex].toString();
       if (Input.isNumeric(subtitle)) {
@@ -306,6 +297,23 @@ use _refreshController.loadComplete() or loadNoData() to end loading
       }
       subtitle = widget.beforeSubtitle + subtitle + widget.afterSubtitle;
     }
+
+    // print(apiDefinition.subText1);
+    // if (apiDefinition.subText1 != null) {
+    //   subtext1 = item[apiDefinition.subText1].toString();
+    //   if (Input.isNumeric(subtext1)) {
+    //     subtext1 = Input.setThousandSeparator(
+    //         item[apiDefinition.subText1].toString());
+    //   }
+    // }
+
+    // if (apiDefinition.subText2 != null) {
+    //   subtext2 = item[apiDefinition.subText2].toString();
+    //   if (Input.isNumeric(subtext2)) {
+    //     subtext2 = Input.setThousandSeparator(
+    //         item[apiDefinition.subText2].toString());
+    //   }
+    // }
 
     if (widget.itemBuilder != null) {
       return widget.itemBuilder(context, item, index);
@@ -342,8 +350,16 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                     )
                   : null,
               title: apiDefinition.titleIndex != null ? Text(title) : null,
-              subtitle:
-                  apiDefinition.subtitleIndex != null ? Text(subtitle) : null,
+              subtitle: 
+              apiDefinition.subtitleIndex != null ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(subtitle),
+                            // subtext1 == "" ? Container () : Text(subtext1),
+                            // subtext2 == "" ? Container () : Text(subtext2),
+                          ],
+                        )
+                  : null,
 
               // title: apiDefinition.titleIndex != null
               //     ? Text(item[apiDefinition.beforeTitle].toString() +
@@ -384,6 +400,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               children: <Widget>[
                 Expanded(
                   child: TextField(
+                    autofocus: true,
                     onChanged: (text) {
                       var search = text.toString().toLowerCase();
                       items = itemsBackup;
