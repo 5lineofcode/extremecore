@@ -37,10 +37,10 @@ class Input {
 
   static getValueOnEdit(key, isEdit) {
     if (isEdit) {
-      print("isedit is true");
+      // print("isedit is true");
       return Input.get(key).toString();
     } else {
-      print("isedit is false");
+      // print("isedit is false");
       return null;
     }
   }

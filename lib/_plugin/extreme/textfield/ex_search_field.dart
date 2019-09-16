@@ -49,6 +49,7 @@ class _ExSearchFieldState extends State<ExSearchField> {
         beforeSubtitle: widget.beforeSubtitle,
         noDelete: true,
         onItemSelected: (item) {
+          // setState(() {});
           print("You Select ");
           print(item);
           Input.set(widget.id + "_item", item);
@@ -64,7 +65,7 @@ class _ExSearchFieldState extends State<ExSearchField> {
           print("#1.5 $value2");
           print("#1.6 $value3");
           print(Input.get(widget.id + "_item"));
-          print(Input.get("discount_id_item")["discount_type"]);
+          // print(Input.get("discount_id_item")["discount_type"]);
         },
         noActionsButton: true,
         noFloatingActionButton: true,
