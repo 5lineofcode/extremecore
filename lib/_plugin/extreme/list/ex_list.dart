@@ -473,19 +473,19 @@ use _refreshController.loadComplete() or loadNoData() to end loading
                 actions: widget.noActionsButton == true
                     ? []
                     : [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              _showSortOptions(context);
-                            },
-                            child: Icon(Icons.sort),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.search),
-                        )
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: InkWell(
+                        //     onTap: () {
+                        //       _showSortOptions(context);
+                        //     },
+                        //     child: Icon(Icons.sort),
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Icon(Icons.search),
+                        // )
                       ]);
   }
 

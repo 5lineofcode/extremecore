@@ -164,6 +164,12 @@ class ServerApi {
     return api;
   }
 
+  Api get discounts {
+    var api = new Api();
+    api.endpoint = "discounts";
+    return api;
+  }
+
   Api get news {
     var api = new Api();
     api.endpoint = "news";
