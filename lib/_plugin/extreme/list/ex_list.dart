@@ -400,7 +400,7 @@ use _refreshController.loadComplete() or loadNoData() to end loading
               children: <Widget>[
                 Expanded(
                   child: TextField(
-                    autofocus: true,
+                    // autofocus: true,
                     onChanged: (text) {
                       var search = text.toString().toLowerCase();
                       items = itemsBackup;

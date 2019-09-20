@@ -1,3 +1,4 @@
+import 'package:extremecore/view/partial/saji_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:extremecore/core.dart';
 
@@ -37,8 +38,10 @@ class _ExLocalListState extends State<ExLocalList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: Saji.getAppBar(
+        context: context,
+        title: widget.title,
+        hasBottom: false,
       ),
       body: items.length == 0
           ? Center(child: Text("Please provide some items"))
