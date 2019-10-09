@@ -111,16 +111,6 @@ class ExtremeHttp {
           handleDioError(error);
           requestDone = true;
           returnedResponse = null;
-          Alert.showAlertDialog(
-            context: httpContext,
-            title: "Time Out Expired",
-            message: null,
-            strOk: "Ok",
-            showCancel: false,
-            onOk: () {
-              Navigator.of(httpContext).pop();
-            },
-          );
         }
       }
     }
