@@ -7,6 +7,7 @@ class ExTextArea extends StatefulWidget {
   final IconData icon;
   final String value;
   final int maxLines;
+  final int maxLength;
   final BuildContext context;
 
   ExTextArea({
@@ -15,6 +16,7 @@ class ExTextArea extends StatefulWidget {
     this.icon = Icons.note,
     this.value,
     this.maxLines = 4,
+    this.maxLength = 500,
     @required this.context,
   });
 
@@ -45,6 +47,7 @@ class _ExTextAreaState extends State<ExTextArea> {
       enable: false,
       value: widget.value != null ? widget.value : "",
       maxLines: widget.maxLines,
+      maxLength: widget.maxLength,
       keyboardType: TextInputType.multiline,
       valueFromController: true,
       onContainerTap: () {
@@ -65,12 +68,14 @@ class TextAreaPopup extends StatefulWidget {
   final String label;
   final IconData icon;
   final int maxLines;
+  final int maxLength;
 
   TextAreaPopup({
     @required this.id,
     @required this.label,
     this.icon = Icons.note,
     this.maxLines = 4,
+    this.maxLength = 500,
   });
 
   @override
@@ -109,6 +114,7 @@ class _TextAreaPopupState extends State<TextAreaPopup> {
               useBorder: true,
               useIcon: true,
               maxLines: widget.maxLines,
+              maxLength: widget.maxLength,
               keyboardType: TextInputType.multiline,
               value: Input.get(widget.id),
               useAutoFocus: true,
